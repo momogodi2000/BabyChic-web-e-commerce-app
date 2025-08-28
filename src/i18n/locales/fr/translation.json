@@ -1,0 +1,488 @@
+{
+  "common": {
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès",
+    "cancel": "Annuler",
+    "confirm": "Confirmer",
+    "save": "Enregistrer",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "add": "Ajouter",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "sort": "Trier",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "close": "Fermer",
+    "view": "Voir",
+    "back": "Retour",
+    "home": "Accueil",
+    "contact": "Contact",
+    "about": "À propos",
+    "services": "Services",
+    "products": "Produits",
+    "categories": "Catégories",
+    "cart": "Panier",
+    "checkout": "Commander",
+    "order": "Commande",
+    "orders": "Commandes",
+    "account": "Compte",
+    "login": "Connexion",
+    "logout": "Déconnexion",
+    "register": "S'inscrire",
+    "email": "Email",
+    "password": "Mot de passe",
+    "phone": "Téléphone",
+    "address": "Adresse",
+    "city": "Ville",
+    "price": "Prix",
+    "quantity": "Quantité",
+    "total": "Total",
+    "subtotal": "Sous-total",
+    "shipping": "Livraison",
+    "payment": "Paiement",
+    "status": "Statut",
+    "date": "Date",
+    "time": "Heure",
+    "yes": "Oui",
+    "no": "Non",
+    "name": "Nom",
+    "description": "Description",
+    "category": "Catégorie",
+    "stock": "Stock",
+    "available": "Disponible",
+    "unavailable": "Indisponible",
+    "new": "Nouveau",
+    "featured": "Vedette",
+    "sale": "Promotion"
+  },
+  
+  "navigation": {
+    "home": "Accueil",
+    "catalog": "Catalogue",
+    "layette0_2": "Layette 0-2 ans",
+    "children3_10": "Enfants 3-10 ans",
+    "women": "Mode Féminine",
+    "shoes": "Chaussures",
+    "accessories": "Accessoires",
+    "cart": "Panier",
+    "admin": "Administration",
+    "dashboard": "Tableau de bord",
+    "products": "Produits",
+    "orders": "Commandes",
+    "customers": "Clients",
+    "settings": "Paramètres"
+  },
+
+  "header": {
+    "topBanner": "🚚 Livraison gratuite à Yaoundé pour toute commande de 25,000 FCFA et plus",
+    "topBannerMobile": "🚚 Livraison gratuite dès 25,000 FCFA",
+    "searchPlaceholder": "Rechercher des produits...",
+    "companyName": "BabyChic",
+    "companySlogan": "Mode & Tendance",
+    "languageSwitch": "Language / Langue"
+  },
+
+  "footer": {
+    "companyDescription": "Votre destination mode pour enfants et femmes au Cameroun. Qualité, style et tendance à portée de clic.",
+    "quickLinks": "Liens Rapides",
+    "allProducts": "Tous les Produits",
+    "customerService": "Service Client",
+    "help": "Aide & FAQ",
+    "sizeGuide": "Guide des Tailles",
+    "returnPolicy": "Politique de Retour",
+    "shippingInfo": "Livraison & Expédition",
+    "termsOfUse": "Conditions d'Utilisation",
+    "contactInfo": "Contact",
+    "address": "Quartier Emana, Yaoundé, Cameroun",
+    "paymentMethods": "Moyens de Paiement",
+    "privacyPolicy": "Politique de Confidentialité",
+    "legalNotices": "Mentions Légales",
+    "cookies": "Cookies",
+    "copyright": "© 2024 BabyChic Cameroun. Tous droits réservés.",
+    "physicalStore": "Boutique Physique",
+    "storeHours": "Lun-Sam: 8h-18h",
+    "storeLocation": "Visitez notre boutique à Emana",
+    "newsletter": "Newsletter",
+    "newsletterDescription": "Recevez nos dernières nouveautés et offres exclusives",
+    "emailPlaceholder": "Votre adresse email",
+    "subscribe": "S'abonner"
+  },
+
+  "home": {
+    "heroTitle": "Mode & Tendance",
+    "heroSubtitle": "pour toute la famille",
+    "heroDescription": "Découvrez notre collection exclusive de vêtements pour enfants et femmes. Qualité, confort et style réunis dans chaque pièce.",
+    "discoverCollection": "Découvrir la Collection",
+    "newLayette": "Nouveautés Layette",
+    "categoriesTitle": "Nos Catégories",
+    "categoriesDescription": "Explorez notre sélection soigneusement choisie pour chaque âge et chaque style",
+    "featuredProducts": "Produits Vedettes",
+    "featuredDescription": "Nos coups de cœur sélectionnés spécialement pour vous",
+    "viewAllProducts": "Voir Tous les Produits",
+    "features": {
+      "fastDelivery": {
+        "title": "Livraison Rapide",
+        "description": "Livraison gratuite à Yaoundé dès 25,000 FCFA"
+      },
+      "securePayment": {
+        "title": "Paiement Sécurisé",
+        "description": "Orange Money & MTN Mobile Money"
+      },
+      "customerSupport": {
+        "title": "Support Client",
+        "description": "Assistance 7j/7 pour vos commandes"
+      }
+    },
+    "newsletter": {
+      "title": "Restez Connectés",
+      "description": "Recevez nos dernières nouveautés et offres exclusives directement dans votre boîte mail",
+      "emailPlaceholder": "Votre adresse email",
+      "subscribe": "S'abonner"
+    },
+    "physicalStore": {
+      "title": "Notre Boutique Physique",
+      "description": "Visitez-nous dans notre boutique située au quartier Emana à Yaoundé",
+      "address": "Quartier Emana, Yaoundé",
+      "hours": "Lun-Sam: 8h-18h",
+      "visitStore": "Visiter la Boutique"
+    }
+  },
+
+  "catalog": {
+    "allProducts": "Tous les Produits",
+    "searchResults": "Résultats pour \"{{query}}\"",
+    "productsFound": "{{count}} produit trouvé",
+    "productsFound_plural": "{{count}} produits trouvés",
+    "filters": "Filtres",
+    "priceRange": "Prix:",
+    "allPrices": "Tous les prix",
+    "under20k": "Moins de 20,000 FCFA",
+    "20kTo50k": "20,000 - 50,000 FCFA",
+    "over50k": "Plus de 50,000 FCFA",
+    "sortBy": "Trier par:",
+    "newest": "Plus récents",
+    "priceAsc": "Prix croissant",
+    "priceDesc": "Prix décroissant",
+    "bestRated": "Mieux notés",
+    "category": "Catégorie",
+    "allCategories": "Toutes les catégories",
+    "size": "Taille",
+    "allSizes": "Toutes les tailles",
+    "availability": "Disponibilité",
+    "allProducts_": "Tous les produits",
+    "inStock": "En stock",
+    "outOfStock": "Rupture de stock",
+    "noProducts": "Aucun produit trouvé",
+    "noProductsDescription": "Essayez de modifier vos critères de recherche ou filtres",
+    "resetFilters": "Réinitialiser les filtres",
+    "viewModes": {
+      "grid": "Grille",
+      "list": "Liste"
+    }
+  },
+
+  "product": {
+    "addToCart": "Ajouter au Panier",
+    "unavailable": "Indisponible",
+    "selectSize": "Sélectionner une taille",
+    "quantity": "Quantité",
+    "inStock": "En stock",
+    "outOfStock": "Rupture",
+    "lowStock": "Stock limité",
+    "reviews": "avis",
+    "rating": "Note",
+    "category": "Catégorie",
+    "sku": "Référence",
+    "features": {
+      "delivery": {
+        "title": "Livraison",
+        "description": "Gratuite dès 25k FCFA"
+      },
+      "warranty": {
+        "title": "Garantie",
+        "description": "Qualité assurée"
+      },
+      "returns": {
+        "title": "Retour",
+        "description": "7 jours gratuit"
+      }
+    },
+    "details": "Détails du Produit",
+    "material": "Matière:",
+    "care": "Entretien:",
+    "features_": "Caractéristiques:",
+    "addingToCart": "Ajout en cours...",
+    "addedToCart": "Ajouté au panier !",
+    "selectSizeFirst": "Veuillez sélectionner une taille",
+    "breadcrumb": {
+      "home": "Accueil",
+      "catalog": "Catalogue"
+    }
+  },
+
+  "cart": {
+    "title": "Mon Panier",
+    "item": "article",
+    "items": "articles",
+    "emptyCart": "Votre panier est vide",
+    "emptyCartDescription": "Découvrez notre collection et ajoutez vos produits préférés au panier",
+    "discoverProducts": "Découvrir nos Produits",
+    "clearCart": "Vider le panier",
+    "size": "Taille:",
+    "removeItem": "Supprimer l'article",
+    "updateQuantity": "Modifier la quantité",
+    "summary": "Récapitulatif de la commande",
+    "subtotal": "Sous-total:",
+    "shipping": "Livraison:",
+    "freeShipping": "Gratuite",
+    "total": "Total:",
+    "freeShippingThreshold": "🚚 Ajoutez {{amount}} FCFA pour bénéficier de la livraison gratuite",
+    "proceedToCheckout": "Procéder au Paiement",
+    "continueShopping": "Continuer mes Achats",
+    "securePayment": "Paiement 100% sécurisé"
+  },
+
+  "checkout": {
+    "title": "Finaliser ma Commande",
+    "emptyCart": "Votre panier est vide",
+    "returnToCatalog": "Retourner au Catalogue",
+    "steps": {
+      "information": "Informations",
+      "delivery": "Livraison",
+      "payment": "Paiement"
+    },
+    "personalInfo": "Informations Personnelles",
+    "firstName": "Prénom *",
+    "lastName": "Nom *",
+    "email": "Email *",
+    "phone": "Téléphone *",
+    "phonePlaceholder": "+237 6XX XXX XXX",
+    "continue": "Continuer",
+    "deliveryAddress": "Adresse de Livraison",
+    "fullAddress": "Adresse complète *",
+    "addressPlaceholder": "Numéro, rue, immeuble...",
+    "city": "Ville *",
+    "yaoundé": "Yaoundé",
+    "douala": "Douala (bientôt disponible)",
+    "quarter": "Quartier *",
+    "quarterPlaceholder": "Ex: Emana, Melen, Bastos...",
+    "landmark": "Point de repère",
+    "landmarkPlaceholder": "Ex: Face à la pharmacie, près de l'école...",
+    "back": "Retour",
+    "paymentMethod": "Mode de Paiement",
+    "orangeMoney": "Paiement sécurisé avec Orange Money",
+    "mtnMomo": "Paiement sécurisé avec MTN Mobile Money",
+    "finalizeOrder": "Finaliser la Commande",
+    "summary": "Récapitulatif",
+    "securePayment": "Paiement 100% sécurisé",
+    "dataProtection": "Vos données de paiement sont protégées et chiffrées"
+  },
+
+  "orderSuccess": {
+    "title": "Commande Confirmée !",
+    "subtitle": "Merci pour votre confiance. Votre commande a été reçue et sera traitée dans les plus brefs délais.",
+    "orderDetails": "Détails de votre commande",
+    "orderNumber": "Numéro de commande",
+    "totalAmount": "Montant total",
+    "status": "Status",
+    "estimatedDelivery": "Livraison estimée",
+    "processing": "En préparation",
+    "businessDays": "2-3 jours ouvrables",
+    "nextSteps": "Prochaines étapes",
+    "smsConfirmation": "Vous recevrez un SMS de confirmation sous peu",
+    "orderPreparation": "Notre équipe préparera votre commande",
+    "deliveryContact": "Un livreur vous contactera pour la livraison",
+    "delivery": "Livraison à l'adresse indiquée sous 2-3 jours",
+    "needHelp": "Besoin d'aide ?",
+    "helpDescription": "Notre équipe est disponible pour répondre à toutes vos questions",
+    "backToHome": "Retour à l'Accueil",
+    "continueShopping": "Continuer mes Achats",
+    "shareExperience": "Partagez votre expérience BabyChic !"
+  },
+
+  "admin": {
+    "title": "Administration",
+    "subtitle": "Connectez-vous pour accéder au panneau d'administration",
+    "backToSite": "Retour au site",
+    "email": "Adresse email",
+    "password": "Mot de passe",
+    "rememberMe": "Se souvenir de moi",
+    "forgotPassword": "Mot de passe oublié ?",
+    "login": "Se Connecter",
+    "loggingIn": "Connexion en cours...",
+    "demo": "Démonstration",
+    "demoDescription": "Pour tester l'interface admin :",
+    "demoEmail": "Email: admin@babychic.cm",
+    "demoPassword": "Mot de passe: admin123",
+    "copyright": "BabyChic Administration © 2024",
+    "dashboard": {
+      "title": "Tableau de Bord",
+      "subtitle": "Aperçu de votre boutique BabyChic",
+      "totalOrders": "Commandes Totales",
+      "revenue": "Chiffre d'Affaires",
+      "products": "Produits",
+      "customers": "Clients",
+      "thisMonth": "ce mois",
+      "thisWeek": "cette semaine",
+      "recentOrders": "Commandes Récentes",
+      "viewAll": "Voir toutes",
+      "lowStock": "Stock Faible",
+      "remaining": "restant",
+      "manageStock": "Gérer les stocks →",
+      "quickActions": "Actions Rapides",
+      "manageProducts": "Gérer les Produits",
+      "viewOrders": "Voir les Commandes",
+      "salesReport": "Rapport des Ventes",
+      "customerManagement": "Gestion Clients"
+    },
+    "products": {
+      "title": "Gestion des Produits",
+      "subtitle": "Gérez votre catalogue de produits",
+      "addProduct": "Ajouter un Produit",
+      "search": "Rechercher",
+      "searchPlaceholder": "Nom du produit...",
+      "category": "Catégorie",
+      "allCategories": "Toutes les catégories",
+      "status": "Statut",
+      "allStatuses": "Tous les statuts",
+      "active": "Actif",
+      "inactive": "Inactif",
+      "draft": "Brouillon",
+      "product": "Produit",
+      "price": "Prix",
+      "stock": "Stock",
+      "lowStock": "Stock faible",
+      "outOfStock": "Rupture",
+      "inStock": "En stock",
+      "actions": "Actions",
+      "showing": "Affichage de {{start}} à {{end}} sur {{total}} produits"
+    },
+    "orders": {
+      "title": "Gestion des Commandes",
+      "subtitle": "Suivez et gérez toutes vos commandes",
+      "pending": "En cours",
+      "processing": "En préparation",
+      "shipping": "En livraison",
+      "delivered": "Livrées",
+      "search": "Rechercher",
+      "searchPlaceholder": "ID commande ou nom client...",
+      "allStatuses": "Tous les statuts",
+      "inProgress": "En cours",
+      "preparation": "En préparation",
+      "delivery": "En livraison",
+      "completed": "Livré",
+      "cancelled": "Annulé",
+      "allPeriods": "Toutes les périodes",
+      "today": "Aujourd'hui",
+      "thisWeek": "Cette semaine",
+      "thisMonth": "Ce mois",
+      "customPeriod": "Période personnalisée",
+      "order": "Commande",
+      "customer": "Client",
+      "items": "Articles",
+      "total": "Total",
+      "status": "Statut",
+      "date": "Date",
+      "actions": "Actions",
+      "viewDetails": "Voir les détails",
+      "markReady": "Marquer comme prêt",
+      "sendForDelivery": "Envoyer en livraison",
+      "showing": "Affichage de {{start}} à {{end}} sur {{total}} commandes"
+    }
+  },
+
+  "contact": {
+    "title": "Contactez-nous",
+    "subtitle": "Nous sommes là pour vous aider",
+    "getInTouch": "Entrer en contact",
+    "description": "Vous avez une question sur nos produits ou nos services ? N'hésitez pas à nous contacter, notre équipe vous répondra dans les plus brefs délais.",
+    "form": {
+      "name": "Nom complet *",
+      "email": "Adresse email *",
+      "phone": "Téléphone",
+      "subject": "Sujet *",
+      "message": "Message *",
+      "send": "Envoyer le message",
+      "sending": "Envoi en cours...",
+      "success": "Votre message a été envoyé avec succès !",
+      "error": "Erreur lors de l'envoi du message"
+    },
+    "info": {
+      "title": "Informations de contact",
+      "address": "Quartier Emana, Yaoundé, Cameroun",
+      "phone": "+237 6XX XXX XXX",
+      "email": "contact@babychic.cm",
+      "hours": "Heures d'ouverture",
+      "schedule": "Lundi - Samedi: 8h00 - 18h00",
+      "sunday": "Dimanche: Fermé"
+    },
+    "visit": {
+      "title": "Visitez notre boutique",
+      "description": "Venez découvrir notre collection directement dans notre boutique physique située au quartier Emana.",
+      "directions": "Obtenir l'itinéraire"
+    }
+  },
+
+  "about": {
+    "title": "À Propos de BabyChic",
+    "subtitle": "Mode & Tendance pour toute la famille",
+    "story": {
+      "title": "Notre Histoire",
+      "content": "Fondée avec la passion de la mode enfantine et féminine, BabyChic Cameroun s'est établie comme une référence dans le domaine de la mode au Cameroun. Située au cœur du quartier Emana à Yaoundé, notre boutique physique et notre plateforme en ligne offrent une expérience d'achat unique, alliant qualité, style et accessibilité."
+    },
+    "mission": {
+      "title": "Notre Mission",
+      "content": "Nous nous engageons à fournir des vêtements de qualité pour enfants de 0 à 10 ans et pour femmes, en mettant l'accent sur le confort, la durabilité et les dernières tendances de la mode. Notre objectif est de rendre la mode accessible à toutes les familles camerounaises."
+    },
+    "values": {
+      "title": "Nos Valeurs",
+      "quality": {
+        "title": "Qualité",
+        "description": "Nous sélectionnons soigneusement chaque produit pour garantir la meilleure qualité à nos clients."
+      },
+      "service": {
+        "title": "Service Client",
+        "description": "Notre équipe dévouée est toujours prête à vous accompagner dans vos achats."
+      },
+      "innovation": {
+        "title": "Innovation",
+        "description": "Nous adoptons les dernières technologies pour améliorer votre expérience d'achat."
+      }
+    },
+    "store": {
+      "title": "Notre Boutique Physique",
+      "description": "Venez nous rendre visite dans notre boutique située au quartier Emana. Vous y trouverez une équipe passionnée prête à vous conseiller et une large sélection de produits à découvrir.",
+      "address": "Quartier Emana, Yaoundé, Cameroun",
+      "hours": "Lundi - Samedi: 8h00 - 18h00"
+    }
+  },
+
+  "newsletter": {
+    "subscribed": "Merci pour votre abonnement !",
+    "error": "Erreur lors de l'abonnement",
+    "alreadySubscribed": "Vous êtes déjà abonné à notre newsletter"
+  },
+
+  "theme": {
+    "light": "Thème clair",
+    "dark": "Thème sombre",
+    "toggle": "Changer de thème"
+  },
+
+  "language": {
+    "french": "Français",
+    "english": "English",
+    "switch": "Changer de langue"
+  },
+
+  "errors": {
+    "notFound": "Page non trouvée",
+    "serverError": "Erreur du serveur",
+    "networkError": "Erreur de réseau",
+    "unauthorized": "Accès non autorisé",
+    "forbidden": "Accès interdit",
+    "tryAgain": "Réessayer"
+  }
+}

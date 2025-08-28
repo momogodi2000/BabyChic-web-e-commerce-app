@@ -1,0 +1,488 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "add": "Add",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "next": "Next",
+    "previous": "Previous",
+    "close": "Close",
+    "view": "View",
+    "back": "Back",
+    "home": "Home",
+    "contact": "Contact",
+    "about": "About",
+    "services": "Services",
+    "products": "Products",
+    "categories": "Categories",
+    "cart": "Cart",
+    "checkout": "Checkout",
+    "order": "Order",
+    "orders": "Orders",
+    "account": "Account",
+    "login": "Login",
+    "logout": "Logout",
+    "register": "Register",
+    "email": "Email",
+    "password": "Password",
+    "phone": "Phone",
+    "address": "Address",
+    "city": "City",
+    "price": "Price",
+    "quantity": "Quantity",
+    "total": "Total",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "payment": "Payment",
+    "status": "Status",
+    "date": "Date",
+    "time": "Time",
+    "yes": "Yes",
+    "no": "No",
+    "name": "Name",
+    "description": "Description",
+    "category": "Category",
+    "stock": "Stock",
+    "available": "Available",
+    "unavailable": "Unavailable",
+    "new": "New",
+    "featured": "Featured",
+    "sale": "Sale"
+  },
+  
+  "navigation": {
+    "home": "Home",
+    "catalog": "Catalog",
+    "layette0_2": "Layette 0-2 years",
+    "children3_10": "Children 3-10 years",
+    "women": "Women's Fashion",
+    "shoes": "Shoes",
+    "accessories": "Accessories",
+    "cart": "Cart",
+    "admin": "Administration",
+    "dashboard": "Dashboard",
+    "products": "Products",
+    "orders": "Orders",
+    "customers": "Customers",
+    "settings": "Settings"
+  },
+
+  "header": {
+    "topBanner": "🚚 Free delivery in Yaoundé for orders over 25,000 CFA",
+    "topBannerMobile": "🚚 Free shipping from 25,000 CFA",
+    "searchPlaceholder": "Search for products...",
+    "companyName": "BabyChic",
+    "companySlogan": "Fashion & Trends",
+    "languageSwitch": "Language / Langue"
+  },
+
+  "footer": {
+    "companyDescription": "Your fashion destination for children and women in Cameroon. Quality, style and trends at your fingertips.",
+    "quickLinks": "Quick Links",
+    "allProducts": "All Products",
+    "customerService": "Customer Service",
+    "help": "Help & FAQ",
+    "sizeGuide": "Size Guide",
+    "returnPolicy": "Return Policy",
+    "shippingInfo": "Shipping & Delivery",
+    "termsOfUse": "Terms of Use",
+    "contactInfo": "Contact",
+    "address": "Emana District, Yaoundé, Cameroon",
+    "paymentMethods": "Payment Methods",
+    "privacyPolicy": "Privacy Policy",
+    "legalNotices": "Legal Notices",
+    "cookies": "Cookies",
+    "copyright": "© 2024 BabyChic Cameroon. All rights reserved.",
+    "physicalStore": "Physical Store",
+    "storeHours": "Mon-Sat: 8am-6pm",
+    "storeLocation": "Visit our store in Emana",
+    "newsletter": "Newsletter",
+    "newsletterDescription": "Receive our latest news and exclusive offers",
+    "emailPlaceholder": "Your email address",
+    "subscribe": "Subscribe"
+  },
+
+  "home": {
+    "heroTitle": "Fashion & Trends",
+    "heroSubtitle": "for the whole family",
+    "heroDescription": "Discover our exclusive collection of children's and women's clothing. Quality, comfort and style united in every piece.",
+    "discoverCollection": "Discover the Collection",
+    "newLayette": "New Layette",
+    "categoriesTitle": "Our Categories",
+    "categoriesDescription": "Explore our carefully chosen selection for every age and every style",
+    "featuredProducts": "Featured Products",
+    "featuredDescription": "Our favorites specially selected for you",
+    "viewAllProducts": "View All Products",
+    "features": {
+      "fastDelivery": {
+        "title": "Fast Delivery",
+        "description": "Free delivery in Yaoundé from 25,000 CFA"
+      },
+      "securePayment": {
+        "title": "Secure Payment",
+        "description": "Orange Money & MTN Mobile Money"
+      },
+      "customerSupport": {
+        "title": "Customer Support",
+        "description": "7/7 assistance for your orders"
+      }
+    },
+    "newsletter": {
+      "title": "Stay Connected",
+      "description": "Receive our latest news and exclusive offers directly in your inbox",
+      "emailPlaceholder": "Your email address",
+      "subscribe": "Subscribe"
+    },
+    "physicalStore": {
+      "title": "Our Physical Store",
+      "description": "Visit us in our store located in the Emana district in Yaoundé",
+      "address": "Emana District, Yaoundé",
+      "hours": "Mon-Sat: 8am-6pm",
+      "visitStore": "Visit the Store"
+    }
+  },
+
+  "catalog": {
+    "allProducts": "All Products",
+    "searchResults": "Results for \"{{query}}\"",
+    "productsFound": "{{count}} product found",
+    "productsFound_plural": "{{count}} products found",
+    "filters": "Filters",
+    "priceRange": "Price:",
+    "allPrices": "All prices",
+    "under20k": "Under 20,000 CFA",
+    "20kTo50k": "20,000 - 50,000 CFA",
+    "over50k": "Over 50,000 CFA",
+    "sortBy": "Sort by:",
+    "newest": "Newest",
+    "priceAsc": "Price ascending",
+    "priceDesc": "Price descending",
+    "bestRated": "Best rated",
+    "category": "Category",
+    "allCategories": "All categories",
+    "size": "Size",
+    "allSizes": "All sizes",
+    "availability": "Availability",
+    "allProducts_": "All products",
+    "inStock": "In stock",
+    "outOfStock": "Out of stock",
+    "noProducts": "No products found",
+    "noProductsDescription": "Try modifying your search criteria or filters",
+    "resetFilters": "Reset filters",
+    "viewModes": {
+      "grid": "Grid",
+      "list": "List"
+    }
+  },
+
+  "product": {
+    "addToCart": "Add to Cart",
+    "unavailable": "Unavailable",
+    "selectSize": "Select a size",
+    "quantity": "Quantity",
+    "inStock": "In stock",
+    "outOfStock": "Out of stock",
+    "lowStock": "Limited stock",
+    "reviews": "reviews",
+    "rating": "Rating",
+    "category": "Category",
+    "sku": "SKU",
+    "features": {
+      "delivery": {
+        "title": "Delivery",
+        "description": "Free from 25k CFA"
+      },
+      "warranty": {
+        "title": "Warranty",
+        "description": "Quality assured"
+      },
+      "returns": {
+        "title": "Returns",
+        "description": "7 days free"
+      }
+    },
+    "details": "Product Details",
+    "material": "Material:",
+    "care": "Care:",
+    "features_": "Features:",
+    "addingToCart": "Adding to cart...",
+    "addedToCart": "Added to cart!",
+    "selectSizeFirst": "Please select a size",
+    "breadcrumb": {
+      "home": "Home",
+      "catalog": "Catalog"
+    }
+  },
+
+  "cart": {
+    "title": "My Cart",
+    "item": "item",
+    "items": "items",
+    "emptyCart": "Your cart is empty",
+    "emptyCartDescription": "Discover our collection and add your favorite products to the cart",
+    "discoverProducts": "Discover our Products",
+    "clearCart": "Clear cart",
+    "size": "Size:",
+    "removeItem": "Remove item",
+    "updateQuantity": "Update quantity",
+    "summary": "Order Summary",
+    "subtotal": "Subtotal:",
+    "shipping": "Shipping:",
+    "freeShipping": "Free",
+    "total": "Total:",
+    "freeShippingThreshold": "🚚 Add {{amount}} CFA to benefit from free shipping",
+    "proceedToCheckout": "Proceed to Checkout",
+    "continueShopping": "Continue Shopping",
+    "securePayment": "100% secure payment"
+  },
+
+  "checkout": {
+    "title": "Complete My Order",
+    "emptyCart": "Your cart is empty",
+    "returnToCatalog": "Return to Catalog",
+    "steps": {
+      "information": "Information",
+      "delivery": "Delivery",
+      "payment": "Payment"
+    },
+    "personalInfo": "Personal Information",
+    "firstName": "First Name *",
+    "lastName": "Last Name *",
+    "email": "Email *",
+    "phone": "Phone *",
+    "phonePlaceholder": "+237 6XX XXX XXX",
+    "continue": "Continue",
+    "deliveryAddress": "Delivery Address",
+    "fullAddress": "Full address *",
+    "addressPlaceholder": "Number, street, building...",
+    "city": "City *",
+    "yaoundé": "Yaoundé",
+    "douala": "Douala (coming soon)",
+    "quarter": "District *",
+    "quarterPlaceholder": "Ex: Emana, Melen, Bastos...",
+    "landmark": "Landmark",
+    "landmarkPlaceholder": "Ex: Opposite the pharmacy, near the school...",
+    "back": "Back",
+    "paymentMethod": "Payment Method",
+    "orangeMoney": "Secure payment with Orange Money",
+    "mtnMomo": "Secure payment with MTN Mobile Money",
+    "finalizeOrder": "Finalize Order",
+    "summary": "Summary",
+    "securePayment": "100% secure payment",
+    "dataProtection": "Your payment data is protected and encrypted"
+  },
+
+  "orderSuccess": {
+    "title": "Order Confirmed!",
+    "subtitle": "Thank you for your trust. Your order has been received and will be processed as soon as possible.",
+    "orderDetails": "Your order details",
+    "orderNumber": "Order number",
+    "totalAmount": "Total amount",
+    "status": "Status",
+    "estimatedDelivery": "Estimated delivery",
+    "processing": "Processing",
+    "businessDays": "2-3 business days",
+    "nextSteps": "Next steps",
+    "smsConfirmation": "You will receive an SMS confirmation shortly",
+    "orderPreparation": "Our team will prepare your order",
+    "deliveryContact": "A delivery person will contact you for delivery",
+    "delivery": "Delivery to the indicated address within 2-3 days",
+    "needHelp": "Need help?",
+    "helpDescription": "Our team is available to answer all your questions",
+    "backToHome": "Back to Home",
+    "continueShopping": "Continue Shopping",
+    "shareExperience": "Share your BabyChic experience!"
+  },
+
+  "admin": {
+    "title": "Administration",
+    "subtitle": "Log in to access the administration panel",
+    "backToSite": "Back to site",
+    "email": "Email address",
+    "password": "Password",
+    "rememberMe": "Remember me",
+    "forgotPassword": "Forgot password?",
+    "login": "Log In",
+    "loggingIn": "Logging in...",
+    "demo": "Demo",
+    "demoDescription": "To test the admin interface:",
+    "demoEmail": "Email: admin@babychic.cm",
+    "demoPassword": "Password: admin123",
+    "copyright": "BabyChic Administration © 2024",
+    "dashboard": {
+      "title": "Dashboard",
+      "subtitle": "Overview of your BabyChic store",
+      "totalOrders": "Total Orders",
+      "revenue": "Revenue",
+      "products": "Products",
+      "customers": "Customers",
+      "thisMonth": "this month",
+      "thisWeek": "this week",
+      "recentOrders": "Recent Orders",
+      "viewAll": "View all",
+      "lowStock": "Low Stock",
+      "remaining": "remaining",
+      "manageStock": "Manage stock →",
+      "quickActions": "Quick Actions",
+      "manageProducts": "Manage Products",
+      "viewOrders": "View Orders",
+      "salesReport": "Sales Report",
+      "customerManagement": "Customer Management"
+    },
+    "products": {
+      "title": "Product Management",
+      "subtitle": "Manage your product catalog",
+      "addProduct": "Add Product",
+      "search": "Search",
+      "searchPlaceholder": "Product name...",
+      "category": "Category",
+      "allCategories": "All categories",
+      "status": "Status",
+      "allStatuses": "All statuses",
+      "active": "Active",
+      "inactive": "Inactive",
+      "draft": "Draft",
+      "product": "Product",
+      "price": "Price",
+      "stock": "Stock",
+      "lowStock": "Low stock",
+      "outOfStock": "Out of stock",
+      "inStock": "In stock",
+      "actions": "Actions",
+      "showing": "Showing {{start}} to {{end}} of {{total}} products"
+    },
+    "orders": {
+      "title": "Order Management",
+      "subtitle": "Track and manage all your orders",
+      "pending": "Pending",
+      "processing": "Processing",
+      "shipping": "Shipping",
+      "delivered": "Delivered",
+      "search": "Search",
+      "searchPlaceholder": "Order ID or customer name...",
+      "allStatuses": "All statuses",
+      "inProgress": "In progress",
+      "preparation": "In preparation",
+      "delivery": "In delivery",
+      "completed": "Delivered",
+      "cancelled": "Cancelled",
+      "allPeriods": "All periods",
+      "today": "Today",
+      "thisWeek": "This week",
+      "thisMonth": "This month",
+      "customPeriod": "Custom period",
+      "order": "Order",
+      "customer": "Customer",
+      "items": "Items",
+      "total": "Total",
+      "status": "Status",
+      "date": "Date",
+      "actions": "Actions",
+      "viewDetails": "View details",
+      "markReady": "Mark as ready",
+      "sendForDelivery": "Send for delivery",
+      "showing": "Showing {{start}} to {{end}} of {{total}} orders"
+    }
+  },
+
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "We're here to help",
+    "getInTouch": "Get in touch",
+    "description": "Do you have a question about our products or services? Don't hesitate to contact us, our team will respond as soon as possible.",
+    "form": {
+      "name": "Full name *",
+      "email": "Email address *",
+      "phone": "Phone",
+      "subject": "Subject *",
+      "message": "Message *",
+      "send": "Send message",
+      "sending": "Sending...",
+      "success": "Your message has been sent successfully!",
+      "error": "Error sending message"
+    },
+    "info": {
+      "title": "Contact information",
+      "address": "Emana District, Yaoundé, Cameroon",
+      "phone": "+237 6XX XXX XXX",
+      "email": "contact@babychic.cm",
+      "hours": "Opening hours",
+      "schedule": "Monday - Saturday: 8:00 AM - 6:00 PM",
+      "sunday": "Sunday: Closed"
+    },
+    "visit": {
+      "title": "Visit our store",
+      "description": "Come discover our collection directly in our physical store located in the Emana district.",
+      "directions": "Get directions"
+    }
+  },
+
+  "about": {
+    "title": "About BabyChic",
+    "subtitle": "Fashion & Trends for the whole family",
+    "story": {
+      "title": "Our Story",
+      "content": "Founded with a passion for children's and women's fashion, BabyChic Cameroon has established itself as a reference in the fashion field in Cameroon. Located in the heart of the Emana district in Yaoundé, our physical store and online platform offer a unique shopping experience, combining quality, style and accessibility."
+    },
+    "mission": {
+      "title": "Our Mission",
+      "content": "We are committed to providing quality clothing for children aged 0 to 10 years and for women, emphasizing comfort, durability and the latest fashion trends. Our goal is to make fashion accessible to all Cameroonian families."
+    },
+    "values": {
+      "title": "Our Values",
+      "quality": {
+        "title": "Quality",
+        "description": "We carefully select each product to guarantee the best quality to our customers."
+      },
+      "service": {
+        "title": "Customer Service",
+        "description": "Our dedicated team is always ready to support you in your purchases."
+      },
+      "innovation": {
+        "title": "Innovation",
+        "description": "We adopt the latest technologies to improve your shopping experience."
+      }
+    },
+    "store": {
+      "title": "Our Physical Store",
+      "description": "Come visit us in our store located in the Emana district. You will find a passionate team ready to advise you and a wide selection of products to discover.",
+      "address": "Emana District, Yaoundé, Cameroon",
+      "hours": "Monday - Saturday: 8:00 AM - 6:00 PM"
+    }
+  },
+
+  "newsletter": {
+    "subscribed": "Thank you for subscribing!",
+    "error": "Subscription error",
+    "alreadySubscribed": "You are already subscribed to our newsletter"
+  },
+
+  "theme": {
+    "light": "Light theme",
+    "dark": "Dark theme",
+    "toggle": "Toggle theme"
+  },
+
+  "language": {
+    "french": "Français",
+    "english": "English",
+    "switch": "Switch language"
+  },
+
+  "errors": {
+    "notFound": "Page not found",
+    "serverError": "Server error",
+    "networkError": "Network error",
+    "unauthorized": "Unauthorized access",
+    "forbidden": "Access forbidden",
+    "tryAgain": "Try again"
+  }
+}
