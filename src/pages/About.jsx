@@ -81,7 +81,7 @@ const About = () => {
             <div className="relative">
               <div className="bg-gradient-to-br from-primary-100 to-secondary-100 dark:from-primary-900/30 dark:to-secondary-900/30 rounded-2xl p-8 transform rotate-3 hover:rotate-0 transition-transform duration-300">
                 <img 
-                  src="/api/placeholder/500/400" 
+                  src="/logo-babychic-2.png" 
                   alt="BabyChic Store" 
                   className="w-full h-80 object-cover rounded-xl shadow-lg"
                 />

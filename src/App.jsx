@@ -15,6 +15,11 @@ import Checkout from './pages/Checkout'
 import OrderSuccess from './pages/OrderSuccess'
 import Contact from './pages/Contact'
 import About from './pages/About'
+import HelpFAQ from './pages/HelpFAQ'
+import SizeGuide from './pages/SizeGuide'
+import ReturnPolicy from './pages/ReturnPolicy'
+import Shipping from './pages/Shipping'
+import Terms from './pages/Terms'
 import AdminLogin from './pages/Admin/AdminLogin'
 import AdminDashboard from './pages/Admin/AdminDashboard'
 import AdminProducts from './pages/Admin/AdminProducts'
@@ -38,7 +43,7 @@ function App() {
     
     // Preload critical resources
     const criticalResources = [
-      { url: '/logo.png', type: 'image' },
+      { url: '/logo-babychic-2.png', type: 'image' },
       { url: '/placeholder-product.jpg', type: 'image' }
     ]
     
@@ -70,7 +75,7 @@ function App() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 to-secondary-50 dark:from-gray-900 dark:to-gray-800">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-primary-200 border-t-primary-500 rounded-full animate-spin mx-auto mb-4"></div>
+          <img src="/logo-babychic-2.png" alt="BabyChic" className="w-20 h-20 mx-auto mb-4 animate-pulse" />
           <h2 className="text-2xl font-bold text-primary-600 dark:text-primary-400 mb-2">BabyChic</h2>
           <p className="text-gray-600 dark:text-gray-300">{t('header.companySlogan')}</p>
         </div>
@@ -99,6 +104,11 @@ function App() {
                     <Route path="/order-success" element={<OrderSuccess />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/about" element={<About />} />
+                    <Route path="/help" element={<HelpFAQ />} />
+                    <Route path="/size-guide" element={<SizeGuide />} />
+                    <Route path="/return-policy" element={<ReturnPolicy />} />
+                    <Route path="/shipping" element={<Shipping />} />
+                    <Route path="/terms" element={<Terms />} />
                     
                     {/* Admin Routes */}
                     <Route path="/admin/login" element={<AdminLogin />} />

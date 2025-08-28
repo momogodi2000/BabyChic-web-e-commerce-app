@@ -193,7 +193,7 @@ const Home = () => {
             <div className="relative animate-slide-up">
               <div className="bg-white rounded-2xl shadow-2xl p-8 transform rotate-3 hover:rotate-0 transition-transform duration-300">
                 <img 
-                  src="/api/placeholder/500/600" 
+                  src="/logo-babychic.jpg" 
                   alt="Mode enfant" 
                   className="w-full h-80 object-cover rounded-xl"
                 />

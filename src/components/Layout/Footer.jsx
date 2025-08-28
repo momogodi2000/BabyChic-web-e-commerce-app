@@ -85,29 +85,29 @@ const Footer = () => {
             <h4 className="text-lg font-semibold mb-4">{t('footer.customerService')}</h4>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors text-sm">
+                <Link to="/help" className="text-gray-400 hover:text-white transition-colors text-sm">
                   {t('footer.help')}
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors text-sm">
+                <Link to="/size-guide" className="text-gray-400 hover:text-white transition-colors text-sm">
                   {t('footer.sizeGuide')}
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors text-sm">
+                <Link to="/return-policy" className="text-gray-400 hover:text-white transition-colors text-sm">
                   {t('footer.returnPolicy')}
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors text-sm">
+                <Link to="/shipping" className="text-gray-400 hover:text-white transition-colors text-sm">
                   {t('footer.shippingInfo')}
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors text-sm">
+                <Link to="/terms" className="text-gray-400 hover:text-white transition-colors text-sm">
                   {t('footer.termsOfUse')}
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
