@@ -1,10 +1,17 @@
 import { useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { CheckCircle, Download, Home, ShoppingBag } from 'lucide-react'
+import { CheckCircle, Download, Home, ShoppingBag, CreditCard } from 'lucide-react'
 
 const OrderSuccess = () => {
   const location = useLocation()
-  const { orderId, total } = location.state || {}
+  const { 
+    orderId, 
+    total, 
+    remainingBalance, 
+    paymentAmount, 
+    deliveryOption,
+    receiptUrl 
+  } = location.state || {}
 
   useEffect(() => {
     // Track conversion for analytics

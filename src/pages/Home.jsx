@@ -23,41 +23,8 @@ const Home = () => {
       setFeaturedProducts(response.data.products || [])
     } catch (error) {
       console.error('Error fetching featured products:', error)
-      // Set mock data for development
-      setFeaturedProducts([
-        {
-          id: 1,
-          name: "Ensemble Bébé Rose",
-          price: 15000,
-          images: ["/api/placeholder/300/300"],
-          category: { name: "Layette 0-2 ans" },
-          slug: "ensemble-bebe-rose"
-        },
-        {
-          id: 2,
-          name: "Robe Fillette Bleu",
-          price: 22000,
-          images: ["/api/placeholder/300/300"],
-          category: { name: "Enfants 3-10 ans" },
-          slug: "robe-fillette-bleu"
-        },
-        {
-          id: 3,
-          name: "Top Femme Élégant",
-          price: 35000,
-          images: ["/api/placeholder/300/300"],
-          category: { name: "Mode Féminine" },
-          slug: "top-femme-elegant"
-        },
-        {
-          id: 4,
-          name: "Chaussures Enfant",
-          price: 18000,
-          images: ["/api/placeholder/300/300"],
-          category: { name: "Chaussures" },
-          slug: "chaussures-enfant"
-        }
-      ])
+      // Show empty state instead of mock data
+      setFeaturedProducts([])
     } finally {
       setIsLoading(false)
     }

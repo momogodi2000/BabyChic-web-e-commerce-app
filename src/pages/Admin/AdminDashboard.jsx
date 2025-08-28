@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { BarChart3, ShoppingBag, Users, TrendingUp, Package, AlertCircle } from 'lucide-react'
+import { ordersAPI } from '../../services/api'
 
 const AdminDashboard = () => {
   const [stats, setStats] = useState({
@@ -11,27 +12,54 @@ const AdminDashboard = () => {
     recentOrders: [],
     lowStockProducts: []
   })
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    // Mock data for demo
-    setStats({
-      totalOrders: 145,
-      totalRevenue: 2450000,
-      totalProducts: 68,
-      totalCustomers: 89,
-      recentOrders: [
-        { id: 'BC2024001', customer: 'Marie Ngozi', amount: 45000, status: 'En cours', date: '2024-01-15' },
-        { id: 'BC2024002', customer: 'Paul Biya', amount: 32000, status: 'Livré', date: '2024-01-15' },
-        { id: 'BC2024003', customer: 'Alice Kamga', amount: 28000, status: 'En préparation', date: '2024-01-14' },
-        { id: 'BC2024004', customer: 'Jean Fotso', amount: 55000, status: 'Livré', date: '2024-01-14' },
-      ],
-      lowStockProducts: [
-        { name: 'Ensemble Bébé Rose', stock: 2, category: 'Layette' },
-        { name: 'Robe Fillette Bleu', stock: 1, category: 'Enfants' },
-        { name: 'Chaussures Confort', stock: 3, category: 'Chaussures' },
-      ]
-    })
+    fetchDashboardStats()
   }, [])
+
+  const fetchDashboardStats = async () => {
+    try {
+      setIsLoading(true)
+      const response = await ordersAPI.getStats()
+      
+      if (response.data) {
+        const { stats: orderStats, recent_orders } = response.data
+        
+        setStats({
+          totalOrders: orderStats?.orders?.total || 0,
+          totalRevenue: orderStats?.revenue?.total || 0,
+          totalProducts: 0, // Will be updated when products API is called
+          totalCustomers: 0, // Will be calculated from unique customers
+          recentOrders: recent_orders?.map(order => ({
+            id: order.order_number,
+            customer: `${order.customer_first_name} ${order.customer_last_name}`,
+            amount: parseFloat(order.total_amount),
+            status: translateOrderStatus(order.status),
+            date: new Date(order.created_at).toLocaleDateString('fr-FR')
+          })) || [],
+          lowStockProducts: [] // Will be updated when products API is implemented
+        })
+      }
+    } catch (error) {
+      console.error('Error fetching dashboard stats:', error)
+      // Keep default empty state on error
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const translateOrderStatus = (status) => {
+    const statusMap = {
+      'pending': 'En attente',
+      'confirmed': 'Confirmé',
+      'processing': 'En préparation',
+      'shipped': 'Expédié',
+      'delivered': 'Livré',
+      'cancelled': 'Annulé'
+    }
+    return statusMap[status] || status
+  }
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -44,6 +72,17 @@ const AdminDashboard = () => {
       default:
         return 'bg-gray-100 text-gray-800'
     }
+  }
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Chargement des statistiques...</p>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -127,21 +166,27 @@ const AdminDashboard = () => {
             </div>
             <div className="p-6">
               <div className="space-y-4">
-                {stats.recentOrders.map((order) => (
-                  <div key={order.id} className="flex items-center justify-between py-3 border-b border-gray-100 last:border-b-0">
-                    <div>
-                      <p className="font-medium text-gray-900">{order.id}</p>
-                      <p className="text-sm text-gray-600">{order.customer}</p>
-                      <p className="text-xs text-gray-500">{order.date}</p>
+                {stats.recentOrders.length > 0 ? (
+                  stats.recentOrders.map((order) => (
+                    <div key={order.id} className="flex items-center justify-between py-3 border-b border-gray-100 last:border-b-0">
+                      <div>
+                        <p className="font-medium text-gray-900">{order.id}</p>
+                        <p className="text-sm text-gray-600">{order.customer}</p>
+                        <p className="text-xs text-gray-500">{order.date}</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="font-semibold text-gray-900">{order.amount.toLocaleString()} FCFA</p>
+                        <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(order.status)}`}>
+                          {order.status}
+                        </span>
+                      </div>
                     </div>
-                    <div className="text-right">
-                      <p className="font-semibold text-gray-900">{order.amount.toLocaleString()} FCFA</p>
-                      <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(order.status)}`}>
-                        {order.status}
-                      </span>
-                    </div>
+                  ))
+                ) : (
+                  <div className="text-center py-8">
+                    <p className="text-gray-500">Aucune commande récente</p>
                   </div>
-                ))}
+                )}
               </div>
             </div>
           </div>

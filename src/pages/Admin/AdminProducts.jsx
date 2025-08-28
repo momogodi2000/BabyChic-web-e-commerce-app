@@ -1,48 +1,60 @@
 import { useState, useEffect } from 'react'
 import { Plus, Search, Edit, Trash2, Package } from 'lucide-react'
+import { productsAPI } from '../../services/api'
 
 const AdminProducts = () => {
   const [products, setProducts] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('')
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    // Mock data for demo
-    setProducts([
-      {
-        id: 1,
-        name: 'Ensemble Bébé Rose Pastel',
-        category: 'Layette 0-2 ans',
-        price: 15000,
-        stock: 12,
-        status: 'active',
-        image: '/api/placeholder/100/100'
-      },
-      {
-        id: 2,
-        name: 'Robe Fillette Bleu Marine',
-        category: 'Enfants 3-10 ans',
-        price: 22000,
-        stock: 8,
-        status: 'active',
-        image: '/api/placeholder/100/100'
-      },
-      {
-        id: 3,
-        name: 'Top Femme Élégant',
-        category: 'Mode Féminine',
-        price: 35000,
-        stock: 5,
-        status: 'active',
-        image: '/api/placeholder/100/100'
+    fetchProducts()
+  }, [searchTerm, selectedCategory])
+
+  const fetchProducts = async () => {
+    try {
+      setIsLoading(true)
+      const params = {}
+      if (searchTerm) params.search = searchTerm
+      if (selectedCategory) params.category = selectedCategory
+      
+      const response = await productsAPI.getAll(params)
+      
+      if (response.data && response.data.products) {
+        setProducts(response.data.products.map(product => ({
+          id: product.id,
+          name: product.name,
+          category: product.category?.name || 'Non catégorisé',
+          price: parseFloat(product.price),
+          stock: product.stock_quantity || 0,
+          status: product.status,
+          image: product.featured_image || '/api/placeholder/100/100'
+        })))
       }
-    ])
-  }, [])
+    } catch (error) {
+      console.error('Error fetching products:', error)
+      setProducts([])
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   const getStockStatus = (stock) => {
     if (stock === 0) return { color: 'text-red-600 bg-red-100', text: 'Rupture' }
     if (stock < 5) return { color: 'text-orange-600 bg-orange-100', text: 'Stock faible' }
     return { color: 'text-green-600 bg-green-100', text: 'En stock' }
+  }
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Chargement des produits...</p>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -128,57 +140,69 @@ const AdminProducts = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
-                {products.map((product) => {
-                  const stockStatus = getStockStatus(product.stock)
-                  return (
-                    <tr key={product.id} className="hover:bg-gray-50">
-                      <td className="py-4 px-6">
-                        <div className="flex items-center space-x-3">
-                          <img
-                            src={product.image}
-                            alt={product.name}
-                            className="w-12 h-12 object-cover rounded-lg"
-                          />
-                          <div>
-                            <p className="font-medium text-gray-900">{product.name}</p>
-                            <p className="text-sm text-gray-600">ID: {product.id}</p>
+                {products.length > 0 ? (
+                  products.map((product) => {
+                    const stockStatus = getStockStatus(product.stock)
+                    return (
+                      <tr key={product.id} className="hover:bg-gray-50">
+                        <td className="py-4 px-6">
+                          <div className="flex items-center space-x-3">
+                            <img
+                              src={product.image}
+                              alt={product.name}
+                              className="w-12 h-12 object-cover rounded-lg"
+                            />
+                            <div>
+                              <p className="font-medium text-gray-900">{product.name}</p>
+                              <p className="text-sm text-gray-600">ID: {product.id}</p>
+                            </div>
                           </div>
-                        </div>
-                      </td>
-                      <td className="py-4 px-6">
-                        <span className="text-gray-900">{product.category}</span>
-                      </td>
-                      <td className="py-4 px-6">
-                        <span className="font-medium text-gray-900">
-                          {product.price.toLocaleString()} FCFA
-                        </span>
-                      </td>
-                      <td className="py-4 px-6">
-                        <div>
-                          <span className="font-medium text-gray-900">{product.stock}</span>
-                          <span className={`ml-2 px-2 py-1 rounded-full text-xs font-medium ${stockStatus.color}`}>
-                            {stockStatus.text}
+                        </td>
+                        <td className="py-4 px-6">
+                          <span className="text-gray-900">{product.category}</span>
+                        </td>
+                        <td className="py-4 px-6">
+                          <span className="font-medium text-gray-900">
+                            {product.price.toLocaleString()} FCFA
                           </span>
-                        </div>
-                      </td>
-                      <td className="py-4 px-6">
-                        <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">
-                          Actif
-                        </span>
-                      </td>
-                      <td className="py-4 px-6">
-                        <div className="flex items-center space-x-2">
-                          <button className="p-2 text-blue-600 hover:bg-blue-100 rounded-lg transition-colors">
-                            <Edit size={16} />
-                          </button>
-                          <button className="p-2 text-red-600 hover:bg-red-100 rounded-lg transition-colors">
-                            <Trash2 size={16} />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  )
-                })}
+                        </td>
+                        <td className="py-4 px-6">
+                          <div>
+                            <span className="font-medium text-gray-900">{product.stock}</span>
+                            <span className={`ml-2 px-2 py-1 rounded-full text-xs font-medium ${stockStatus.color}`}>
+                              {stockStatus.text}
+                            </span>
+                          </div>
+                        </td>
+                        <td className="py-4 px-6">
+                          <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">
+                            Actif
+                          </span>
+                        </td>
+                        <td className="py-4 px-6">
+                          <div className="flex items-center space-x-2">
+                            <button className="p-2 text-blue-600 hover:bg-blue-100 rounded-lg transition-colors">
+                              <Edit size={16} />
+                            </button>
+                            <button className="p-2 text-red-600 hover:bg-red-100 rounded-lg transition-colors">
+                              <Trash2 size={16} />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    )
+                  })
+                ) : (
+                  <tr>
+                    <td colSpan="6" className="py-12 text-center">
+                      <div className="text-gray-500">
+                        <Package size={48} className="mx-auto mb-4 text-gray-300" />
+                        <p className="text-lg font-medium mb-2">Aucun produit trouvé</p>
+                        <p className="text-sm">Ajoutez vos premiers produits pour commencer à vendre.</p>
+                      </div>
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>

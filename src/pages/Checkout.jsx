@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ArrowLeft, CreditCard, MapPin, User } from 'lucide-react'
 import { useCart } from '../context/CartContext'
+import { publicAPI } from '../services/api'
 
 const Checkout = () => {
   const { cart, getCartTotal, clearCart } = useCart()
@@ -19,22 +20,48 @@ const Checkout = () => {
     quarter: '',
     landmark: '',
     // Payment
-    paymentMethod: 'orange-money'
+    paymentMethod: 'orange-money',
+    deliveryOnly: false // New option for delivery payment
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleInputChange = (e) => {
+    const { name, value, type, checked } = e.target
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [name]: type === 'checkbox' ? checked : value
     })
+  }
+
+  const getDeliveryFee = () => {
+    return getCartTotal() >= 25000 ? 0 : 2000
+  }
+
+  const getPaymentAmount = () => {
+    if (formData.deliveryOnly) {
+      return getDeliveryFee() // Only pay delivery fee now
+    }
+    return getCartTotal() + getDeliveryFee() // Full payment
+  }
+
+  const getRemainingBalance = () => {
+    if (formData.deliveryOnly) {
+      return getCartTotal() // Amount to pay on delivery
+    }
+    return 0
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setIsSubmitting(true)
     
-    // Create order
+    // Create order with delivery payment options
     const orderData = {
-      items: cart,
+      items: cart.map(item => ({
+        id: item.id,
+        quantity: item.quantity,
+        selectedSize: item.selectedSize
+      })),
       customer: {
         firstName: formData.firstName,
         lastName: formData.lastName,
@@ -48,27 +75,35 @@ const Checkout = () => {
         landmark: formData.landmark
       },
       payment: {
-        method: formData.paymentMethod,
-        amount: getCartTotal() + (getCartTotal() >= 25000 ? 0 : 2500)
-      }
+        method: formData.paymentMethod
+      },
+      deliveryOnly: formData.deliveryOnly
     }
 
     try {
-      // Here you would integrate with your backend API
-      console.log('Order data:', orderData)
+      // Create order using the backend API
+      const response = await publicAPI.createOrder(orderData)
       
-      // Simulate order creation
-      setTimeout(() => {
+      if (response.data) {
+        const { order, receipt } = response.data
+        
         clearCart()
         navigate('/order-success', { 
           state: { 
-            orderId: 'BC' + Date.now(),
-            total: orderData.payment.amount 
+            orderId: order.orderNumber,
+            total: order.total,
+            remainingBalance: order.remainingBalance || 0,
+            paymentAmount: getPaymentAmount(),
+            deliveryOption: order.deliveryOption,
+            receiptUrl: receipt?.downloadUrl
           }
         })
-      }, 1000)
+      }
     } catch (error) {
       console.error('Error creating order:', error)
+      alert('Erreur lors de la création de la commande. Veuillez réessayer.')
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -391,14 +426,14 @@ const Checkout = () => {
                     {getCartTotal() >= 25000 ? (
                       <span className="text-green-600">Gratuite</span>
                     ) : (
-                      '2,500 FCFA'
+                      '2,000 FCFA'
                     )}
                   </span>
                 </div>
                 <div className="flex justify-between text-lg font-bold text-primary-600 pt-2 border-t border-gray-200">
                   <span>Total:</span>
                   <span>
-                    {(getCartTotal() + (getCartTotal() >= 25000 ? 0 : 2500)).toLocaleString()} FCFA
+                    {(getCartTotal() + (getCartTotal() >= 25000 ? 0 : 2000)).toLocaleString()} FCFA
                   </span>
                 </div>
               </div>

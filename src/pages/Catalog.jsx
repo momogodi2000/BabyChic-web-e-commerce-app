@@ -34,47 +34,8 @@ const Catalog = () => {
       setProducts(response.data.products || [])
     } catch (error) {
       console.error('Error fetching products:', error)
-      // Mock data for development
-      setProducts([
-        {
-          id: 1,
-          name: "Ensemble Bébé Rose Pastel",
-          price: 15000,
-          originalPrice: 20000,
-          image: "/api/placeholder/300/300",
-          category: "Layette 0-2 ans",
-          rating: 4.8,
-          inStock: true
-        },
-        {
-          id: 2,
-          name: "Robe Fillette Bleu Marine",
-          price: 22000,
-          image: "/api/placeholder/300/300",
-          category: "Enfants 3-10 ans",
-          rating: 4.9,
-          inStock: true
-        },
-        {
-          id: 3,
-          name: "Top Femme Élégant Blanc",
-          price: 35000,
-          image: "/api/placeholder/300/300",
-          category: "Mode Féminine",
-          rating: 4.7,
-          inStock: false
-        },
-        {
-          id: 4,
-          name: "Chaussures Enfant Confort",
-          price: 18000,
-          originalPrice: 25000,
-          image: "/api/placeholder/300/300",
-          category: "Chaussures",
-          rating: 4.6,
-          inStock: true
-        }
-      ])
+      // Show empty state instead of mock data
+      setProducts([])
     } finally {
       setIsLoading(false)
     }

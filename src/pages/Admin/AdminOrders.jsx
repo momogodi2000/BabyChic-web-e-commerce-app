@@ -1,49 +1,59 @@
 import { useState, useEffect } from 'react'
 import { Search, Eye, Edit, Package, Truck } from 'lucide-react'
+import { ordersAPI } from '../../services/api'
 
 const AdminOrders = () => {
   const [orders, setOrders] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
   const [statusFilter, setStatusFilter] = useState('')
 
+  const [isLoading, setIsLoading] = useState(true)
+
   useEffect(() => {
-    // Mock data for demo
-    setOrders([
-      {
-        id: 'BC2024001',
-        customer: 'Marie Ngozi',
-        email: 'marie.ngozi@email.com',
-        phone: '+237 6XX XXX XXX',
-        items: 3,
-        total: 45000,
-        status: 'En cours',
-        date: '2024-01-15T10:30:00',
-        address: 'Quartier Emana, Yaoundé'
-      },
-      {
-        id: 'BC2024002',
-        customer: 'Paul Biya',
-        email: 'paul.biya@email.com',
-        phone: '+237 6XX XXX XXX',
-        items: 2,
-        total: 32000,
-        status: 'Livré',
-        date: '2024-01-15T09:15:00',
-        address: 'Quartier Bastos, Yaoundé'
-      },
-      {
-        id: 'BC2024003',
-        customer: 'Alice Kamga',
-        email: 'alice.kamga@email.com',
-        phone: '+237 6XX XXX XXX',
-        items: 1,
-        total: 28000,
-        status: 'En préparation',
-        date: '2024-01-14T16:45:00',
-        address: 'Quartier Melen, Yaoundé'
+    fetchOrders()
+  }, [searchTerm, statusFilter])
+
+  const fetchOrders = async () => {
+    try {
+      setIsLoading(true)
+      const params = {}
+      if (searchTerm) params.search = searchTerm
+      if (statusFilter) params.status = statusFilter
+      
+      const response = await ordersAPI.getAll(params)
+      
+      if (response.data && response.data.orders) {
+        setOrders(response.data.orders.map(order => ({
+          id: order.order_number,
+          customer: `${order.customer_first_name} ${order.customer_last_name}`,
+          email: order.customer_email,
+          phone: order.customer_phone,
+          items: order.items?.length || 0,
+          total: parseFloat(order.total_amount),
+          status: translateOrderStatus(order.status),
+          date: order.created_at,
+          address: `${order.shipping_address?.address}, ${order.shipping_address?.city}`
+        })))
       }
-    ])
-  }, [])
+    } catch (error) {
+      console.error('Error fetching orders:', error)
+      setOrders([])
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const translateOrderStatus = (status) => {
+    const statusMap = {
+      'pending': 'En attente',
+      'confirmed': 'Confirmé',
+      'processing': 'En préparation',
+      'shipped': 'Expédié',
+      'delivered': 'Livré',
+      'cancelled': 'Annulé'
+    }
+    return statusMap[status] || status
+  }
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -64,6 +74,17 @@ const AdminOrders = () => {
     setOrders(orders.map(order => 
       order.id === orderId ? { ...order, status: newStatus } : order
     ))
+  }
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Chargement des commandes...</p>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -171,76 +192,88 @@ const AdminOrders = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
-                {orders.map((order) => (
-                  <tr key={order.id} className="hover:bg-gray-50">
-                    <td className="py-4 px-6">
-                      <div>
-                        <p className="font-medium text-gray-900">{order.id}</p>
-                        <p className="text-sm text-gray-600">{order.address}</p>
-                      </div>
-                    </td>
-                    <td className="py-4 px-6">
-                      <div>
-                        <p className="font-medium text-gray-900">{order.customer}</p>
-                        <p className="text-sm text-gray-600">{order.email}</p>
-                        <p className="text-sm text-gray-600">{order.phone}</p>
-                      </div>
-                    </td>
-                    <td className="py-4 px-6">
-                      <span className="font-medium text-gray-900">{order.items} article{order.items > 1 ? 's' : ''}</span>
-                    </td>
-                    <td className="py-4 px-6">
-                      <span className="font-bold text-gray-900">
-                        {order.total.toLocaleString()} FCFA
-                      </span>
-                    </td>
-                    <td className="py-4 px-6">
-                      <select
-                        value={order.status}
-                        onChange={(e) => updateOrderStatus(order.id, e.target.value)}
-                        className={`px-3 py-1 rounded-full text-xs font-medium border-0 ${getStatusColor(order.status)}`}
-                      >
-                        <option value="En cours">En cours</option>
-                        <option value="En préparation">En préparation</option>
-                        <option value="En livraison">En livraison</option>
-                        <option value="Livré">Livré</option>
-                        <option value="Annulé">Annulé</option>
-                      </select>
-                    </td>
-                    <td className="py-4 px-6">
-                      <div>
-                        <p className="text-sm font-medium text-gray-900">
-                          {new Date(order.date).toLocaleDateString('fr-FR')}
-                        </p>
-                        <p className="text-xs text-gray-600">
-                          {new Date(order.date).toLocaleTimeString('fr-FR')}
-                        </p>
-                      </div>
-                    </td>
-                    <td className="py-4 px-6">
-                      <div className="flex items-center space-x-2">
-                        <button 
-                          className="p-2 text-blue-600 hover:bg-blue-100 rounded-lg transition-colors"
-                          title="Voir les détails"
+                {orders.length > 0 ? (
+                  orders.map((order) => (
+                    <tr key={order.id} className="hover:bg-gray-50">
+                      <td className="py-4 px-6">
+                        <div>
+                          <p className="font-medium text-gray-900">{order.id}</p>
+                          <p className="text-sm text-gray-600">{order.address}</p>
+                        </div>
+                      </td>
+                      <td className="py-4 px-6">
+                        <div>
+                          <p className="font-medium text-gray-900">{order.customer}</p>
+                          <p className="text-sm text-gray-600">{order.email}</p>
+                          <p className="text-sm text-gray-600">{order.phone}</p>
+                        </div>
+                      </td>
+                      <td className="py-4 px-6">
+                        <span className="font-medium text-gray-900">{order.items} article{order.items > 1 ? 's' : ''}</span>
+                      </td>
+                      <td className="py-4 px-6">
+                        <span className="font-bold text-gray-900">
+                          {order.total.toLocaleString()} FCFA
+                        </span>
+                      </td>
+                      <td className="py-4 px-6">
+                        <select
+                          value={order.status}
+                          onChange={(e) => updateOrderStatus(order.id, e.target.value)}
+                          className={`px-3 py-1 rounded-full text-xs font-medium border-0 ${getStatusColor(order.status)}`}
                         >
-                          <Eye size={16} />
-                        </button>
-                        <button 
-                          className="p-2 text-green-600 hover:bg-green-100 rounded-lg transition-colors"
-                          title="Marquer comme prêt"
-                        >
-                          <Package size={16} />
-                        </button>
-                        <button 
-                          className="p-2 text-purple-600 hover:bg-purple-100 rounded-lg transition-colors"
-                          title="Envoyer en livraison"
-                        >
-                          <Truck size={16} />
-                        </button>
+                          <option value="En cours">En cours</option>
+                          <option value="En préparation">En préparation</option>
+                          <option value="En livraison">En livraison</option>
+                          <option value="Livré">Livré</option>
+                          <option value="Annulé">Annulé</option>
+                        </select>
+                      </td>
+                      <td className="py-4 px-6">
+                        <div>
+                          <p className="text-sm font-medium text-gray-900">
+                            {new Date(order.date).toLocaleDateString('fr-FR')}
+                          </p>
+                          <p className="text-xs text-gray-600">
+                            {new Date(order.date).toLocaleTimeString('fr-FR')}
+                          </p>
+                        </div>
+                      </td>
+                      <td className="py-4 px-6">
+                        <div className="flex items-center space-x-2">
+                          <button 
+                            className="p-2 text-blue-600 hover:bg-blue-100 rounded-lg transition-colors"
+                            title="Voir les détails"
+                          >
+                            <Eye size={16} />
+                          </button>
+                          <button 
+                            className="p-2 text-green-600 hover:bg-green-100 rounded-lg transition-colors"
+                            title="Marquer comme prêt"
+                          >
+                            <Package size={16} />
+                          </button>
+                          <button 
+                            className="p-2 text-purple-600 hover:bg-purple-100 rounded-lg transition-colors"
+                            title="Envoyer en livraison"
+                          >
+                            <Truck size={16} />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="7" className="py-12 text-center">
+                      <div className="text-gray-500">
+                        <Package size={48} className="mx-auto mb-4 text-gray-300" />
+                        <p className="text-lg font-medium mb-2">Aucune commande trouvée</p>
+                        <p className="text-sm">Les commandes apparaîtront ici une fois passées par les clients.</p>
                       </div>
                     </td>
                   </tr>
-                ))}
+                )}
               </tbody>
             </table>
           </div>

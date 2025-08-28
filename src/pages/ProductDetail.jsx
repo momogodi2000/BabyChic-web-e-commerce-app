@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { Star, Heart, ShoppingCart, Minus, Plus, Truck, Shield, RotateCcw } from 'lucide-react'
+import { Star, Heart, ShoppingCart, Minus, Plus, Truck, Shield, RotateCcw, MessageSquare, User } from 'lucide-react'
 import { useCart } from '../context/CartContext'
 import { publicAPI } from '../services/api'
 
@@ -14,48 +14,119 @@ const ProductDetail = () => {
   const [selectedSize, setSelectedSize] = useState('')
   const [isLiked, setIsLiked] = useState(false)
   const [isAddingToCart, setIsAddingToCart] = useState(false)
+  const [reviews, setReviews] = useState([])
+  const [showReviewForm, setShowReviewForm] = useState(false)
+  const [newReview, setNewReview] = useState({
+    rating: 5,
+    comment: '',
+    author: ''
+  })
 
   useEffect(() => {
     fetchProduct()
+    fetchReviews()
   }, [id])
 
   const fetchProduct = async () => {
     setIsLoading(true)
     try {
       const response = await publicAPI.getProduct(id)
-      setProduct(response.data)
+      if (response.data) {
+        const product = response.data
+        setProduct({
+          id: product.id,
+          name: product.name,
+          price: parseFloat(product.price),
+          originalPrice: product.original_price ? parseFloat(product.original_price) : null,
+          description: product.description,
+          images: product.images?.length > 0 ? product.images.map(img => img.url) : [product.featured_image || "/api/placeholder/600/600"],
+          category: product.category?.name || "Non catégorisé",
+          rating: product.rating || 0,
+          reviewCount: product.reviews_count || 0,
+          inStock: product.stock_quantity > 0,
+          stockQuantity: product.stock_quantity,
+          sizes: product.sizes ? product.sizes.split(',').map(s => s.trim()) : [],
+          colors: product.colors ? product.colors.split(',').map(c => c.trim()) : [],
+          material: product.material || "Non spécifié",
+          care: product.care_instructions ? product.care_instructions.split(',').map(c => c.trim()) : [],
+          features: product.features ? product.features.split(',').map(f => f.trim()) : [],
+          reviews: []
+        })
+      }
     } catch (error) {
       console.error('Error fetching product:', error)
-      // Mock data for development
-      setProduct({
-        id: parseInt(id),
-        name: "Ensemble Bébé Rose Pastel Premium",
-        price: 15000,
-        originalPrice: 20000,
-        description: "Ensemble bébé en coton bio ultra-doux, parfait pour les tout-petits. Comprend un body à manches longues et un pantalon assorti. Matière hypoallergénique et certifiée OEKO-TEX.",
-        images: [
-          "/api/placeholder/600/600",
-          "/api/placeholder/600/600",
-          "/api/placeholder/600/600",
-          "/api/placeholder/600/600"
-        ],
-        category: "Layette 0-2 ans",
-        rating: 4.8,
-        reviewCount: 24,
-        inStock: true,
-        sizes: ["0-3m", "3-6m", "6-9m", "9-12m"],
-        colors: ["Rose", "Bleu", "Blanc"],
-        material: "100% Coton Bio",
-        care: ["Lavage machine 30°", "Pas de sèche-linge", "Repassage doux"],
-        features: [
-          "Matière hypoallergénique",
-          "Coutures plates pour plus de confort",
-          "Pressions faciles à manipuler",
-          "Certifié OEKO-TEX Standard 100"
-        ]
-      })
+      setProduct(null)
     } finally {
       setIsLoading(false)
+    }
+  }
+
+  const fetchReviews = async () => {
+    try {
+      // Mock reviews for development since backend reviews API might not be ready
+      setReviews([
+        {
+          id: 1,
+          author: 'Marie L.',
+          rating: 5,
+          comment: 'Très beau produit, qualité exceptionnelle ! Mon bébé est très à l\'aise dedans.',
+          date: '2024-01-15'
+        },
+        {
+          id: 2,
+          author: 'Sophie K.',
+          rating: 4,
+          comment: 'Joli design et matière douce. La taille correspond bien.',
+          date: '2024-01-10'
+        },
+        {
+          id: 3,
+          author: 'Charlotte M.',
+          rating: 5,
+          comment: 'Parfait pour mon petit bout de chou. Je recommande vivement !',
+          date: '2024-01-08'
+        }
+      ])
+    } catch (error) {
+      console.error('Error fetching reviews:', error)
+      setReviews([])
+    }
+  }
+
+  const handleSubmitReview = async (e) => {
+    e.preventDefault()
+    if (!newReview.author.trim() || !newReview.comment.trim()) {
+      alert('Veuillez remplir tous les champs')
+      return
+    }
+
+    try {
+      // For now, just add to local state since backend API might not be ready
+      const review = {
+        id: Date.now(),
+        author: newReview.author,
+        rating: newReview.rating,
+        comment: newReview.comment,
+        date: new Date().toISOString().split('T')[0]
+      }
+      
+      setReviews([review, ...reviews])
+      setNewReview({ rating: 5, comment: '', author: '' })
+      setShowReviewForm(false)
+      
+      // Update product rating
+      if (product) {
+        const newReviewCount = product.reviewCount + 1
+        const newRating = ((product.rating * product.reviewCount) + newReview.rating) / newReviewCount
+        setProduct({
+          ...product,
+          rating: Math.round(newRating * 10) / 10,
+          reviewCount: newReviewCount
+        })
+      }
+    } catch (error) {
+      console.error('Error submitting review:', error)
+      alert('Erreur lors de l\'ajout du commentaire')
     }
   }
 
@@ -331,6 +402,136 @@ const ProductDetail = () => {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* Reviews Section */}
+        <div className="mt-12 bg-white rounded-lg border border-gray-200 p-8">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-2xl font-bold text-gray-900">
+              Avis Clients ({reviews.length})
+            </h3>
+            <button
+              onClick={() => setShowReviewForm(!showReviewForm)}
+              className="btn-primary flex items-center space-x-2"
+            >
+              <MessageSquare size={16} />
+              <span>Laisser un avis</span>
+            </button>
+          </div>
+
+          {/* Review Form */}
+          {showReviewForm && (
+            <div className="mb-8 p-6 bg-gray-50 rounded-lg">
+              <h4 className="text-lg font-semibold mb-4">Donner votre avis</h4>
+              <form onSubmit={handleSubmitReview} className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Votre nom
+                  </label>
+                  <input
+                    type="text"
+                    value={newReview.author}
+                    onChange={(e) => setNewReview({ ...newReview, author: e.target.value })}
+                    className="input-field"
+                    placeholder="Entrez votre nom"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Note
+                  </label>
+                  <div className="flex space-x-2">
+                    {[1, 2, 3, 4, 5].map((rating) => (
+                      <button
+                        key={rating}
+                        type="button"
+                        onClick={() => setNewReview({ ...newReview, rating })}
+                        className="p-1"
+                      >
+                        <Star
+                          size={24}
+                          className={`${
+                            rating <= newReview.rating
+                              ? 'text-yellow-400 fill-current'
+                              : 'text-gray-300'
+                          }`}
+                        />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Votre commentaire
+                  </label>
+                  <textarea
+                    value={newReview.comment}
+                    onChange={(e) => setNewReview({ ...newReview, comment: e.target.value })}
+                    className="input-field"
+                    rows={4}
+                    placeholder="Partagez votre expérience avec ce produit..."
+                    required
+                  />
+                </div>
+                <div className="flex space-x-4">
+                  <button type="submit" className="btn-primary">
+                    Publier l'avis
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setShowReviewForm(false)}
+                    className="btn-outline"
+                  >
+                    Annuler
+                  </button>
+                </div>
+              </form>
+            </div>
+          )}
+
+          {/* Reviews List */}
+          <div className="space-y-6">
+            {reviews.length > 0 ? (
+              reviews.map((review) => (
+                <div key={review.id} className="border-b border-gray-200 pb-6 last:border-b-0">
+                  <div className="flex items-start space-x-4">
+                    <div className="bg-primary-100 p-3 rounded-full">
+                      <User size={20} className="text-primary-600" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center space-x-3 mb-2">
+                        <h5 className="font-semibold text-gray-900">{review.author}</h5>
+                        <div className="flex items-center space-x-1">
+                          {[...Array(5)].map((_, i) => (
+                            <Star
+                              key={i}
+                              size={16}
+                              className={`${
+                                i < review.rating
+                                  ? 'text-yellow-400 fill-current'
+                                  : 'text-gray-300'
+                              }`}
+                            />
+                          ))}
+                        </div>
+                        <span className="text-sm text-gray-500">
+                          {new Date(review.date).toLocaleDateString('fr-FR')}
+                        </span>
+                      </div>
+                      <p className="text-gray-700">{review.comment}</p>
+                    </div>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="text-center py-8">
+                <MessageSquare size={48} className="mx-auto mb-4 text-gray-300" />
+                <p className="text-gray-500 text-lg">Aucun avis pour le moment</p>
+                <p className="text-gray-400">Soyez le premier à donner votre avis sur ce produit !</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
