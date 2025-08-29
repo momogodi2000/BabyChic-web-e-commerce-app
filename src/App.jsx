@@ -30,6 +30,7 @@ import AdminBulkUpload from './pages/Admin/AdminBulkUpload'
 import AdminContact from './pages/Admin/AdminContact'
 import AdminSettings from './pages/Admin/AdminSettings'
 import AdminAnalytics from './pages/Admin/AdminAnalytics'
+import AdminFinances from './pages/Admin/AdminFinances'
 import PWAInstallModal from './components/PWA/PWAInstallModal'
 import { CartProvider } from './context/CartContext'
 import { AuthProvider } from './context/AuthContext'
@@ -99,51 +100,59 @@ function App() {
           <CartProvider>
             <CompareProvider>
               <Router>
-              <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-                <Header />
-                <main className="flex-1">
-                  <Routes>
-                    {/* Public Routes */}
-                    <Route path="/" element={<Home />} />
-                    <Route path="/catalog" element={<Catalog />} />
-                    <Route path="/catalog/:category" element={<Catalog />} />
-                    <Route path="/product/:id" element={<ProductDetail />} />
-                    <Route path="/cart" element={<Cart />} />
-                    <Route path="/checkout" element={<Checkout />} />
-                    <Route path="/order-success" element={<OrderSuccess />} />
-                    <Route path="/contact" element={<Contact />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/help" element={<HelpFAQ />} />
-                    <Route path="/size-guide" element={<SizeGuide />} />
-                    <Route path="/return-policy" element={<ReturnPolicy />} />
-                    <Route path="/shipping" element={<Shipping />} />
-                    <Route path="/terms" element={<Terms />} />
-                    
-                    {/* Admin Routes */}
-                    <Route path="/admin/login" element={<AdminLogin />} />
-                    <Route 
-                      path="/admin" 
-                      element={
-                        <ProtectedRoute>
-                          <AdminLayout />
-                        </ProtectedRoute>
-                      } 
-                    >
-                      <Route path="dashboard" element={<AdminDashboard />} />
-                      <Route path="users" element={<AdminUsers />} />
-                      <Route path="products" element={<AdminProducts />} />
-                      <Route path="bulk-upload" element={<AdminBulkUpload />} />
-                      <Route path="orders" element={<AdminOrders />} />
-                      <Route path="analytics" element={<AdminAnalytics />} />
-                      <Route path="contacts" element={<AdminContact />} />
-                      <Route path="newsletter" element={<AdminContact />} />
-                      <Route path="settings" element={<AdminSettings />} />
-                    </Route>
-                  </Routes>
-                </main>
-                <Footer />
-                <PWAInstallModal />
-              </div>
+                <Routes>
+                  {/* Admin Routes (without Header/Footer) */}
+                  <Route path="/admin/login" element={<AdminLogin />} />
+                  <Route 
+                    path="/admin/*" 
+                    element={
+                      <ProtectedRoute>
+                        <AdminLayout />
+                      </ProtectedRoute>
+                    } 
+                  >
+                    <Route path="dashboard" element={<AdminDashboard />} />
+                    <Route path="users" element={<AdminUsers />} />
+                    <Route path="products" element={<AdminProducts />} />
+                    <Route path="bulk-upload" element={<AdminBulkUpload />} />
+                    <Route path="orders" element={<AdminOrders />} />
+                    <Route path="analytics" element={<AdminAnalytics />} />
+                    <Route path="finances" element={<AdminFinances />} />
+                    <Route path="contacts" element={<AdminContact />} />
+                    <Route path="newsletter" element={<AdminContact />} />
+                    <Route path="settings" element={<AdminSettings />} />
+                  </Route>
+
+                  {/* Public Routes (with Header/Footer) */}
+                  <Route 
+                    path="/*" 
+                    element={
+                      <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+                        <Header />
+                        <main className="flex-1">
+                          <Routes>
+                            <Route path="/" element={<Home />} />
+                            <Route path="/catalog" element={<Catalog />} />
+                            <Route path="/catalog/:category" element={<Catalog />} />
+                            <Route path="/product/:id" element={<ProductDetail />} />
+                            <Route path="/cart" element={<Cart />} />
+                            <Route path="/checkout" element={<Checkout />} />
+                            <Route path="/order-success" element={<OrderSuccess />} />
+                            <Route path="/contact" element={<Contact />} />
+                            <Route path="/about" element={<About />} />
+                            <Route path="/help" element={<HelpFAQ />} />
+                            <Route path="/size-guide" element={<SizeGuide />} />
+                            <Route path="/return-policy" element={<ReturnPolicy />} />
+                            <Route path="/shipping" element={<Shipping />} />
+                            <Route path="/terms" element={<Terms />} />
+                          </Routes>
+                        </main>
+                        <Footer />
+                        <PWAInstallModal />
+                      </div>
+                    }
+                  />
+                </Routes>
               </Router>
             </CompareProvider>
           </CartProvider>

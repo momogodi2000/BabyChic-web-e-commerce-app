@@ -26,6 +26,7 @@ const AdminDashboard = () => {
     totalProducts: 0,
     totalCustomers: 0,
     recentOrders: [],
+    topProducts: [],
     lowStockProducts: [],
     monthlyRevenue: [],
     todayStats: {
@@ -233,19 +234,32 @@ const AdminDashboard = () => {
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Produits Populaires</h3>
           <div className="space-y-4">
-            {[1, 2, 3, 4, 5].map((item) => (
-              <div key={item} className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-gray-200 rounded-lg"></div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-900">Produit {item}</p>
-                  <p className="text-xs text-gray-500">{50 - item * 8} ventes</p>
+            {stats.topProducts && stats.topProducts.length > 0 ? (
+              stats.topProducts.map((product) => (
+                <div key={product.id} className="flex items-center space-x-3">
+                  <div className="w-8 h-8 bg-gray-200 rounded-lg overflow-hidden">
+                    <img 
+                      src={product.image || '/placeholder-product.jpg'} 
+                      alt={product.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-gray-900">{product.name}</p>
+                    <p className="text-xs text-gray-500">{product.sales || 0} ventes</p>
+                  </div>
+                  <div className="flex items-center space-x-1">
+                    <Star className="text-yellow-400" size={12} />
+                    <span className="text-xs text-gray-600">{product.rating || 'N/A'}</span>
+                  </div>
                 </div>
-                <div className="flex items-center space-x-1">
-                  <Star className="text-yellow-400" size={12} />
-                  <span className="text-xs text-gray-600">4.{item}</span>
-                </div>
+              ))
+            ) : (
+              <div className="text-center py-4 text-gray-500">
+                <Package size={24} className="mx-auto mb-2 text-gray-300" />
+                <p className="text-sm">Aucun produit populaire</p>
               </div>
-            ))}
+            )}
           </div>
         </div>
       </div>

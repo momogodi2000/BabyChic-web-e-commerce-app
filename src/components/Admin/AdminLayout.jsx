@@ -118,13 +118,22 @@ const AdminLayout = () => {
   }
 
   useEffect(() => {
-    // Simulate fetching notifications
-    setNotifications([
-      { id: 1, message: '5 nouvelles commandes', type: 'order', time: '5 min' },
-      { id: 2, message: '3 nouveaux messages', type: 'message', time: '15 min' },
-      { id: 3, message: 'Stock faible: 2 produits', type: 'warning', time: '1h' }
-    ])
+    fetchNotifications()
   }, [])
+
+  const fetchNotifications = async () => {
+    try {
+      // This would be replaced with actual API call
+      // const response = await notificationsAPI.getRecent()
+      // setNotifications(response.data.notifications || [])
+      
+      // For now, keep empty until backend is ready
+      setNotifications([])
+    } catch (error) {
+      console.error('Error fetching notifications:', error)
+      setNotifications([])
+    }
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">

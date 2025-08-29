@@ -49,45 +49,31 @@ const AdminUsers = () => {
   const fetchUsers = async () => {
     try {
       setIsLoading(true)
-      // Mock data for now - replace with actual API call
-      const mockUsers = [
-        {
-          id: 1,
-          firstName: 'Admin',
-          lastName: 'Principal',
-          email: 'admin@babychic.cm',
-          phone: '+237600000000',
-          role: 'admin',
-          isActive: true,
-          lastLogin: '2024-01-15T10:30:00',
-          createdAt: '2024-01-01T00:00:00'
-        },
-        {
-          id: 2,
-          firstName: 'Manager',
-          lastName: 'Commercial',
-          email: 'manager@babychic.cm',
-          phone: '+237600000001',
-          role: 'manager',
-          isActive: true,
-          lastLogin: '2024-01-14T15:45:00',
-          createdAt: '2024-01-05T00:00:00'
-        },
-        {
-          id: 3,
-          firstName: 'Super',
-          lastName: 'Administrateur',
-          email: 'superuser@babychic.cm',
-          phone: '+237600000002',
-          role: 'admin',
-          isActive: true,
-          lastLogin: '2024-01-13T09:15:00',
-          createdAt: '2024-01-10T00:00:00'
-        }
-      ]
-      setUsers(mockUsers)
+      const params = {}
+      if (searchTerm) params.search = searchTerm
+      if (roleFilter) params.role = roleFilter
+
+      const response = await authAPI.getUsers(params)
+      
+      if (response.data && response.data.users) {
+        const usersList = response.data.users.map(user => ({
+          id: user.id,
+          firstName: user.first_name,
+          lastName: user.last_name,
+          email: user.email,
+          phone: user.phone || '+237600000000',
+          role: user.role || 'user',
+          isActive: user.is_active !== false,
+          lastLogin: user.last_login || new Date().toISOString(),
+          createdAt: user.created_at || new Date().toISOString()
+        }))
+        setUsers(usersList)
+      } else {
+        setUsers([])
+      }
     } catch (error) {
       console.error('Error fetching users:', error)
+      // Fallback to empty array on error
       setUsers([])
     } finally {
       setIsLoading(false)
@@ -164,13 +150,9 @@ const AdminUsers = () => {
 
     try {
       if (modalType === 'create') {
-        // Create new user
-        console.log('Creating user:', formData)
-        // await authAPI.createUser(formData)
+        await authAPI.createUser(formData)
       } else {
-        // Update existing user
-        console.log('Updating user:', currentUser.id, formData)
-        // await authAPI.updateUser(currentUser.id, formData)
+        await authAPI.updateUser(currentUser.id, formData)
       }
       
       closeModal()
@@ -178,31 +160,30 @@ const AdminUsers = () => {
       alert(modalType === 'create' ? 'Utilisateur créé avec succès' : 'Utilisateur mis à jour avec succès')
     } catch (error) {
       console.error('Error saving user:', error)
-      alert('Erreur lors de la sauvegarde')
+      alert(`Erreur lors de la sauvegarde: ${error.response?.data?.message || error.message}`)
     }
   }
 
   const toggleUserStatus = async (userId, isActive) => {
     try {
-      console.log(`Toggling user ${userId} status to ${!isActive}`)
-      // await authAPI.updateUser(userId, { isActive: !isActive })
+      await authAPI.updateUser(userId, { isActive: !isActive })
       fetchUsers()
+      alert(`Statut utilisateur ${!isActive ? 'activé' : 'désactivé'} avec succès`)
     } catch (error) {
       console.error('Error toggling user status:', error)
-      alert('Erreur lors de la mise à jour du statut')
+      alert(`Erreur lors de la mise à jour du statut: ${error.response?.data?.message || error.message}`)
     }
   }
 
   const deleteUser = async (userId) => {
     if (window.confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')) {
       try {
-        console.log('Deleting user:', userId)
-        // await authAPI.deleteUser(userId)
+        await authAPI.deleteUser(userId)
         fetchUsers()
         alert('Utilisateur supprimé avec succès')
       } catch (error) {
         console.error('Error deleting user:', error)
-        alert('Erreur lors de la suppression')
+        alert(`Erreur lors de la suppression: ${error.response?.data?.message || error.message}`)
       }
     }
   }

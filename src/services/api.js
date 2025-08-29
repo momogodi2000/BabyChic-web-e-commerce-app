@@ -140,6 +140,10 @@ api.interceptors.response.use(
 export const authAPI = {
   login: (credentials) => api.post('/auth/login', credentials),
   verifyToken: (token) => api.post('/auth/verify', { token }),
+  getUsers: (params = {}) => api.get('/admin/users', { params }),
+  createUser: (userData) => api.post('/admin/users', userData),
+  updateUser: (id, userData) => api.put(`/admin/users/${id}`, userData),
+  deleteUser: (id) => api.delete(`/admin/users/${id}`),
 }
 
 // Products API
