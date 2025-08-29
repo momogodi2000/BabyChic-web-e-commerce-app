@@ -1,9 +1,35 @@
 import { Link } from 'react-router-dom'
-import { Trash2, Plus, Minus, ShoppingBag, ArrowLeft } from 'lucide-react'
+import { Trash2, Plus, Minus, ShoppingBag, ArrowLeft, MessageCircle, CreditCard } from 'lucide-react'
 import { useCart } from '../context/CartContext'
+import { useState } from 'react'
 
 const Cart = () => {
   const { cart, removeFromCart, updateQuantity, getCartTotal, clearCart } = useCart()
+  const [showPaymentOptions, setShowPaymentOptions] = useState(false)
+  
+  const generateWhatsAppMessage = () => {
+    const total = getCartTotal() + (getCartTotal() >= 25000 ? 0 : 2500)
+    const itemsList = cart.map(item => 
+      `• ${item.name} (${item.selectedSize || 'Taille standard'}) - Qté: ${item.quantity} - ${(item.price * item.quantity).toLocaleString()} FCFA`
+    ).join('\n')
+    
+    const message = `*Commande BabyChic*\n\n` +
+      `Bonjour, je souhaite passer une commande :\n\n` +
+      `${itemsList}\n\n` +
+      `*Sous-total:* ${getCartTotal().toLocaleString()} FCFA\n` +
+      `*Livraison:* ${getCartTotal() >= 25000 ? 'Gratuite' : '2,500 FCFA'}\n` +
+      `*Total à payer:* ${total.toLocaleString()} FCFA\n\n` +
+      `Merci de me confirmer la disponibilité et les modalités de livraison.`
+    
+    return encodeURIComponent(message)
+  }
+  
+  const handleWhatsAppPayment = () => {
+    const whatsappNumber = "+237696969696" // Replace with actual business number
+    const message = generateWhatsAppMessage()
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`
+    window.open(whatsappUrl, '_blank')
+  }
 
   if (cart.length === 0) {
     return (
@@ -156,35 +182,70 @@ const Cart = () => {
                 </div>
               )}
 
-              <Link 
-                to="/checkout" 
-                className="w-full btn-primary text-center block mb-4"
-              >
-                Procéder au Paiement
-              </Link>
-              
-              <Link 
-                to="/catalog" 
-                className="w-full btn-outline text-center block"
-              >
-                Continuer mes Achats
-              </Link>
+              {!showPaymentOptions ? (
+                <>
+                  <button 
+                    onClick={() => setShowPaymentOptions(true)}
+                    className="w-full btn-primary text-center block mb-4"
+                  >
+                    Choisir le Mode de Paiement
+                  </button>
+                  
+                  <Link 
+                    to="/catalog" 
+                    className="w-full btn-outline text-center block"
+                  >
+                    Continuer mes Achats
+                  </Link>
+                </>
+              ) : (
+                <div className="space-y-3 mb-4">
+                  <h4 className="font-semibold text-gray-900 mb-4">Choisissez votre mode de paiement</h4>
+                  
+                  <Link 
+                    to="/checkout" 
+                    className="w-full bg-green-600 hover:bg-green-700 text-white py-3 px-4 rounded-lg text-center block transition-colors flex items-center justify-center space-x-2"
+                  >
+                    <CreditCard size={18} />
+                    <span>Paiement Mobile (MTN/Orange)</span>
+                  </Link>
+                  
+                  <button
+                    onClick={handleWhatsAppPayment}
+                    className="w-full bg-green-500 hover:bg-green-600 text-white py-3 px-4 rounded-lg text-center transition-colors flex items-center justify-center space-x-2"
+                  >
+                    <MessageCircle size={18} />
+                    <span>Commander via WhatsApp</span>
+                  </button>
+                  
+                  <button 
+                    onClick={() => setShowPaymentOptions(false)}
+                    className="w-full text-gray-600 py-2 text-sm hover:text-gray-800 transition-colors"
+                  >
+                    Retour
+                  </button>
+                </div>
+              )}
 
               {/* Security Badge */}
               <div className="mt-6 pt-6 border-t border-gray-200">
-                <div className="flex items-center justify-center space-x-2 text-sm text-gray-600">
+                <div className="flex items-center justify-center space-x-2 text-sm text-gray-600 mb-3">
                   <div className="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
                     <div className="w-2 h-2 bg-white rounded-full"></div>
                   </div>
                   <span>Paiement 100% sécurisé</span>
                 </div>
-                <div className="flex justify-center space-x-2 mt-3">
-                  <div className="bg-orange-500 text-white px-2 py-1 rounded text-xs font-semibold">
+                <div className="grid grid-cols-2 gap-2 mb-3">
+                  <div className="bg-orange-500 text-white px-2 py-1 rounded text-xs font-semibold text-center">
                     Orange Money
                   </div>
-                  <div className="bg-yellow-500 text-black px-2 py-1 rounded text-xs font-semibold">
+                  <div className="bg-yellow-500 text-black px-2 py-1 rounded text-xs font-semibold text-center">
                     MTN MoMo
                   </div>
+                </div>
+                <div className="flex items-center justify-center space-x-2 text-xs text-gray-500">
+                  <MessageCircle size={14} className="text-green-500" />
+                  <span>Ou commandez directement via WhatsApp</span>
                 </div>
               </div>
             </div>

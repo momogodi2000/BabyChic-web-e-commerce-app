@@ -21,15 +21,23 @@ import ReturnPolicy from './pages/ReturnPolicy'
 import Shipping from './pages/Shipping'
 import Terms from './pages/Terms'
 import AdminLogin from './pages/Admin/AdminLogin'
+import AdminLayout from './components/Admin/AdminLayout'
 import AdminDashboard from './pages/Admin/AdminDashboard'
+import AdminUsers from './pages/Admin/AdminUsers'
 import AdminProducts from './pages/Admin/AdminProducts'
 import AdminOrders from './pages/Admin/AdminOrders'
+import AdminBulkUpload from './pages/Admin/AdminBulkUpload'
+import AdminContact from './pages/Admin/AdminContact'
+import AdminSettings from './pages/Admin/AdminSettings'
+import AdminAnalytics from './pages/Admin/AdminAnalytics'
+import PWAInstallModal from './components/PWA/PWAInstallModal'
 import { CartProvider } from './context/CartContext'
 import { AuthProvider } from './context/AuthContext'
 import { ThemeProvider } from './context/ThemeContext'
 import { LanguageProvider } from './context/LanguageContext'
 import { CompareProvider } from './context/CompareContext'
 import ProtectedRoute from './components/ProtectedRoute'
+import { HelmetProvider } from 'react-helmet-async'
 import './i18n'
 import './App.css'
 
@@ -84,8 +92,9 @@ function App() {
   }
 
   return (
-    <ThemeProvider>
-      <LanguageProvider>
+    <HelmetProvider>
+      <ThemeProvider>
+        <LanguageProvider>
         <AuthProvider>
           <CartProvider>
             <CompareProvider>
@@ -113,39 +122,35 @@ function App() {
                     {/* Admin Routes */}
                     <Route path="/admin/login" element={<AdminLogin />} />
                     <Route 
-                      path="/admin/dashboard" 
+                      path="/admin" 
                       element={
                         <ProtectedRoute>
-                          <AdminDashboard />
+                          <AdminLayout />
                         </ProtectedRoute>
                       } 
-                    />
-                    <Route 
-                      path="/admin/products" 
-                      element={
-                        <ProtectedRoute>
-                          <AdminProducts />
-                        </ProtectedRoute>
-                      } 
-                    />
-                    <Route 
-                      path="/admin/orders" 
-                      element={
-                        <ProtectedRoute>
-                          <AdminOrders />
-                        </ProtectedRoute>
-                      } 
-                    />
+                    >
+                      <Route path="dashboard" element={<AdminDashboard />} />
+                      <Route path="users" element={<AdminUsers />} />
+                      <Route path="products" element={<AdminProducts />} />
+                      <Route path="bulk-upload" element={<AdminBulkUpload />} />
+                      <Route path="orders" element={<AdminOrders />} />
+                      <Route path="analytics" element={<AdminAnalytics />} />
+                      <Route path="contacts" element={<AdminContact />} />
+                      <Route path="newsletter" element={<AdminContact />} />
+                      <Route path="settings" element={<AdminSettings />} />
+                    </Route>
                   </Routes>
                 </main>
                 <Footer />
+                <PWAInstallModal />
               </div>
               </Router>
             </CompareProvider>
           </CartProvider>
         </AuthProvider>
-      </LanguageProvider>
-    </ThemeProvider>
+        </LanguageProvider>
+      </ThemeProvider>
+    </HelmetProvider>
   )
 }
 

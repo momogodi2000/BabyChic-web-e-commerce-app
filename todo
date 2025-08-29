@@ -1,0 +1,206 @@
+BabyChic E-Commerce MVP – Project Update & Enhancement Specification
+Overview
+
+This MVP supports two types of users:
+
+Admin: authenticated, full control over the platform.
+
+Guest/Client: unauthenticated, acts as a visitor/customer (no login required).
+
+The goal is to update both front-end and back-end for a robust admin experience and smooth guest interactions, integrating mobile and WhatsApp payment options.
+
+1. Admin Interface & Dashboard
+Layout & Navigation
+
+Implement a full Admin Layout applied to all admin pages for consistent navigation.
+
+Include a sidebar with links to:
+
+User Management
+
+Product Management
+
+Command/Order Management
+
+Statistics & Financials
+
+Contact Messages & Newsletter
+
+General Settings
+
+Include a Logout button accessible from all admin pages.
+
+Optional enhancements:
+
+Highlight the active page in the sidebar
+
+Breadcrumb navigation to show current page context
+
+Functional Requirements
+
+Product Management: add, update, delete, list products; manage categories; upload/manage images; optional bulk upload and product variants (size, color).
+
+Order Management: view all orders, validate payments, update statuses, export data (CSV/PDF), handle refunds/cancellations, display payment proof images.
+
+User Management: manage users, assign admin roles (super-admin/regular admin), track guest checkout info, display user activity logs.
+
+Contact & Newsletter: reply individually or in bulk, schedule campaigns, delete/archive messages, add message tagging/labeling, segmentation, email templates.
+
+Statistics & Financials: display usage stats, payment transactions, graphical dashboards, monthly/weekly/yearly breakdowns, conversion rates.
+
+General Settings: modify application-wide settings, optional theme/branding customization, site-wide notifications, toggle active/inactive products.
+
+2. Mobile Payment & WhatsApp Integration
+Mobile Payment
+
+Use Noupai API as primary payment service.
+
+Implement Campay API as fallback if Noupai fails.
+
+Display payment status history per order.
+
+Optional: manual payment marking for WhatsApp or offline payments.
+
+WhatsApp Payment
+
+Add a “Pay via WhatsApp” button in the shopping cart.
+
+Generates a pre-filled message containing:
+
+Cart details
+
+Total amount
+
+Relevant checkout info
+
+Optional backend integration for WhatsApp Business API to track or automate messages.
+
+Admin notifications when WhatsApp payment is initiated.
+
+Pre-filled templates for faster checkout.
+
+3. Guest / Client Functionalities
+Browsing & Catalog
+
+Browse catalog, search, filter by categories.
+
+View detailed product information and images.
+
+Optional: recently viewed products, wishlist/favorites.
+
+Shopping Cart & Checkout
+
+Add/remove items, view cart summary.
+
+Checkout options:
+
+Mobile payment (Noupai → Campay fallback)
+
+WhatsApp direct payment (pre-filled message sent to admin)
+
+Optional guest email/phone collection for receipts or notifications.
+
+Display estimated delivery date.
+
+Contact & Newsletter
+
+Submit inquiries or messages to admin.
+
+Subscribe/unsubscribe to newsletters.
+
+Auto-response for contact submissions.
+
+Confirmation emails for newsletter subscriptions.
+
+Search & Navigation Enhancements
+
+Advanced filtering: price, category, stock availability.
+
+Related product suggestions.
+
+Optional voice search or autocomplete.
+
+4. Admin & Guest Action Flows
+Admin
+
+Uses Admin Layout for all pages.
+
+Can logout, manage products, orders, users, messages, newsletters, statistics, settings.
+
+Product and order operations fully integrated with backend.
+
+Guest/Client
+
+Browse catalog and add products to cart.
+
+Choose payment method: mobile or WhatsApp.
+
+Submit contact messages and subscribe to newsletters.
+
+No authentication required.
+
+5. MVP Clarifications & Missing Sections
+
+Role-based access: only admin can access admin pages.
+
+Clients/guests: no authentication required.
+
+Uploads: validate images, sanitize filenames.
+
+Stock concurrency: prevent overselling during checkout.
+
+Payment retries: handle fallback logic (Noupai → Campay).
+
+Rate-limiting: for contact forms and newsletter subscriptions.
+
+Error handling: basic handling for edge cases.
+
+Keep MVP simple: only admin dashboard + guests/clients, no login required for clients.
+
+6. Technical / Backend Updates
+
+Role-based access control middleware for admin routes.
+
+Rate-limiting for contact/newsletter endpoints.
+
+Transactional stock updates to avoid overselling.
+
+Logging & monitoring: errors, payment failures, WhatsApp actions.
+
+Unit & integration tests for key workflows (product CRUD, checkout, payments).
+
+Optional caching for product catalog for performance.
+
+7. Optional / Future Enhancements
+
+Product reviews & ratings.
+
+Discount codes and promotions management.
+
+Multi-language support (i18n).
+
+Mobile-responsive improvements for front-end & admin panel.
+
+Automated reporting: daily/weekly sales summaries emailed to admin.
+
+Analytics tracking (Google Analytics or custom tracking).
+
+8. Prioritized Next Steps
+
+Scaffold Admin Layout & integrate all admin pages.
+
+Complete product CRUD with image uploads.
+
+Implement order viewing & payment validation.
+
+Integrate Noupai & Campay APIs with fallback logic.
+
+Add WhatsApp “Pay via WhatsApp” option for guest checkout.
+
+Implement statistics, newsletter, and general settings pages.
+
+Ensure logout works and navigation links function.
+
+Test end-to-end flows for admin actions and guest checkout.
+
+This organized version separates admin, client, technical, payments, and future enhancements clearly, making it easier to implement, track, and prioritize tasks.

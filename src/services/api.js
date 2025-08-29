@@ -152,6 +152,9 @@ export const productsAPI = {
   uploadImage: (formData) => api.post('/products/upload', formData, {
     headers: { 'Content-Type': 'multipart/form-data' }
   }),
+  uploadImages: (id, formData) => api.post(`/products/${id}/images`, formData, {
+    headers: { 'Content-Type': 'multipart/form-data' }
+  }),
 }
 
 // Categories API
@@ -168,6 +171,7 @@ export const ordersAPI = {
   getAll: (params = {}) => api.get('/orders', { params }),
   getById: (id) => api.get(`/orders/${id}`),
   updateStatus: (id, status) => api.patch(`/orders/${id}/status`, { status }),
+  validatePayment: (id) => api.patch(`/orders/${id}/payment/validate`),
   getStats: () => api.get('/orders/stats'),
 }
 
@@ -176,6 +180,33 @@ export const paymentsAPI = {
   initiate: (paymentData) => api.post('/payments/initiate', paymentData),
   verify: (transactionId) => api.post('/payments/verify', { transactionId }),
   webhook: (data) => api.post('/payments/webhook', data),
+}
+
+// Contact API
+export const contactAPI = {
+  getAll: (params = {}) => api.get('/contacts', { params }),
+  getById: (id) => api.get(`/contacts/${id}`),
+  delete: (id) => api.delete(`/contacts/${id}`),
+  markAsRead: (id) => api.patch(`/contacts/${id}/read`),
+  reply: (id, reply) => api.post(`/contacts/${id}/reply`, reply),
+}
+
+// Newsletter API
+export const newsletterAPI = {
+  getSubscribers: (params = {}) => api.get('/newsletter/subscribers', { params }),
+  deleteSubscriber: (id) => api.delete(`/newsletter/subscribers/${id}`),
+  sendNewsletter: (data) => api.post('/newsletter/send', data),
+  getStats: () => api.get('/newsletter/stats'),
+}
+
+// Settings API
+export const settingsAPI = {
+  get: () => api.get('/settings'),
+  update: (settings) => api.put('/settings', settings),
+  updateLogo: (formData) => api.post('/settings/logo', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' }
+  }),
+  updateSEO: (seoData) => api.put('/settings/seo', seoData),
 }
 
 // Public API (no auth required)

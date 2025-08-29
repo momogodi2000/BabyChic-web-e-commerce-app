@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { ArrowRight, Star, Truck, Shield, Headphones, Heart } from 'lucide-react'
 import { publicAPI } from '../services/api'
 import NewsletterSubscribe from '../components/Newsletter/NewsletterSubscribe'
+import SEOHead from '../components/SEO/SEOHead'
 
 const Home = () => {
   const { t } = useTranslation()
@@ -129,6 +130,13 @@ const Home = () => {
 
   return (
     <div className="min-h-screen">
+      <SEOHead 
+        title="BabyChic Cameroun - Mode & Tendance pour toute la famille"
+        description="Découvrez notre collection de vêtements pour enfants (0-10 ans) et femmes au Cameroun. Mode, qualité et tendance à prix abordables. Livraison à Yaoundé, Douala et partout au Cameroun."
+        keywords="babychic, mode enfant, vêtements bébé, mode femme, cameroun, yaoundé, douala, shopping, e-commerce, vêtements enfants, tendance mode, layette, boutique en ligne"
+        canonical="/"
+        ogType="website"
+      />
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-primary-50 via-white to-secondary-50 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 py-20">
         <div className="container mx-auto px-4">

@@ -1,7 +1,23 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { BarChart3, ShoppingBag, Users, TrendingUp, Package, AlertCircle } from 'lucide-react'
-import { ordersAPI } from '../../services/api'
+import { 
+  BarChart3, 
+  ShoppingBag, 
+  Users, 
+  TrendingUp, 
+  Package, 
+  AlertCircle, 
+  DollarSign,
+  Eye,
+  Calendar,
+  ArrowUp,
+  ArrowDown,
+  Activity,
+  Clock,
+  MessageSquare,
+  Star
+} from 'lucide-react'
+import { ordersAPI, productsAPI } from '../../services/api'
 
 const AdminDashboard = () => {
   const [stats, setStats] = useState({
@@ -10,9 +26,16 @@ const AdminDashboard = () => {
     totalProducts: 0,
     totalCustomers: 0,
     recentOrders: [],
-    lowStockProducts: []
+    lowStockProducts: [],
+    monthlyRevenue: [],
+    todayStats: {
+      orders: 0,
+      revenue: 0,
+      visitors: 0
+    }
   })
   const [isLoading, setIsLoading] = useState(true)
+  const [selectedPeriod, setSelectedPeriod] = useState('today')
 
   useEffect(() => {
     fetchDashboardStats()
@@ -76,7 +99,7 @@ const AdminDashboard = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="flex items-center justify-center h-64">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500 mx-auto"></div>
           <p className="mt-4 text-gray-600">Chargement des statistiques...</p>
@@ -86,76 +109,150 @@ const AdminDashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white border-b border-gray-200">
-        <div className="container mx-auto px-4 py-6">
+    <div className="space-y-6">
+      {/* Page Header */}
+      <div className="flex items-center justify-between">
+        <div>
           <h1 className="text-3xl font-bold text-gray-900">Tableau de Bord</h1>
-          <p className="text-gray-600 mt-2">Aperçu de votre boutique BabyChic</p>
+          <p className="text-gray-600 mt-2">Aperçu général de votre boutique BabyChic</p>
+        </div>
+        <div className="flex items-center space-x-4">
+          <select 
+            value={selectedPeriod}
+            onChange={(e) => setSelectedPeriod(e.target.value)}
+            className="input-field"
+          >
+            <option value="today">Aujourd'hui</option>
+            <option value="week">Cette semaine</option>
+            <option value="month">Ce mois</option>
+            <option value="year">Cette année</option>
+          </select>
+          <button className="btn-primary">
+            <Calendar size={18} className="mr-2" />
+            Rapport
+          </button>
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-8">
-        {/* Stats Cards */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-600 text-sm font-medium">Commandes Totales</p>
-                <p className="text-3xl font-bold text-gray-900 mt-1">{stats.totalOrders}</p>
-                <p className="text-green-600 text-sm mt-2">+12% ce mois</p>
-              </div>
-              <div className="bg-blue-100 p-3 rounded-full">
-                <ShoppingBag className="text-blue-600" size={24} />
+      {/* Stats Cards */}
+      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-gray-600 text-sm font-medium">Commandes Totales</p>
+              <p className="text-3xl font-bold text-gray-900 mt-1">{stats.totalOrders}</p>
+              <div className="flex items-center mt-2">
+                <ArrowUp className="text-green-500" size={16} />
+                <p className="text-green-600 text-sm ml-1">+12% ce mois</p>
               </div>
             </div>
-          </div>
-
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-600 text-sm font-medium">Chiffre d'Affaires</p>
-                <p className="text-3xl font-bold text-gray-900 mt-1">
-                  {stats.totalRevenue.toLocaleString()} FCFA
-                </p>
-                <p className="text-green-600 text-sm mt-2">+18% ce mois</p>
-              </div>
-              <div className="bg-green-100 p-3 rounded-full">
-                <TrendingUp className="text-green-600" size={24} />
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-600 text-sm font-medium">Produits</p>
-                <p className="text-3xl font-bold text-gray-900 mt-1">{stats.totalProducts}</p>
-                <p className="text-blue-600 text-sm mt-2">+5 cette semaine</p>
-              </div>
-              <div className="bg-purple-100 p-3 rounded-full">
-                <Package className="text-purple-600" size={24} />
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-600 text-sm font-medium">Clients</p>
-                <p className="text-3xl font-bold text-gray-900 mt-1">{stats.totalCustomers}</p>
-                <p className="text-green-600 text-sm mt-2">+8% ce mois</p>
-              </div>
-              <div className="bg-orange-100 p-3 rounded-full">
-                <Users className="text-orange-600" size={24} />
-              </div>
+            <div className="bg-blue-100 p-3 rounded-full">
+              <ShoppingBag className="text-blue-600" size={24} />
             </div>
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8">
-          {/* Recent Orders */}
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-gray-600 text-sm font-medium">Chiffre d'Affaires</p>
+              <p className="text-3xl font-bold text-gray-900 mt-1">
+                {stats.totalRevenue.toLocaleString()} FCFA
+              </p>
+              <div className="flex items-center mt-2">
+                <ArrowUp className="text-green-500" size={16} />
+                <p className="text-green-600 text-sm ml-1">+18% ce mois</p>
+              </div>
+            </div>
+            <div className="bg-green-100 p-3 rounded-full">
+              <DollarSign className="text-green-600" size={24} />
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-gray-600 text-sm font-medium">Produits Actifs</p>
+              <p className="text-3xl font-bold text-gray-900 mt-1">{stats.totalProducts}</p>
+              <div className="flex items-center mt-2">
+                <ArrowUp className="text-blue-500" size={16} />
+                <p className="text-blue-600 text-sm ml-1">+5 cette semaine</p>
+              </div>
+            </div>
+            <div className="bg-purple-100 p-3 rounded-full">
+              <Package className="text-purple-600" size={24} />
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-gray-600 text-sm font-medium">Clients Uniques</p>
+              <p className="text-3xl font-bold text-gray-900 mt-1">{stats.totalCustomers}</p>
+              <div className="flex items-center mt-2">
+                <ArrowUp className="text-green-500" size={16} />
+                <p className="text-green-600 text-sm ml-1">+8% ce mois</p>
+              </div>
+            </div>
+            <div className="bg-orange-100 p-3 rounded-full">
+              <Users className="text-orange-600" size={24} />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Charts and Analytics */}
+      <div className="grid lg:grid-cols-3 gap-6 mb-8">
+        {/* Revenue Chart */}
+        <div className="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-lg font-semibold text-gray-900">Évolution du Chiffre d'Affaires</h3>
+            <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-1">
+                <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                <span className="text-sm text-gray-600">Revenus</span>
+              </div>
+              <div className="flex items-center space-x-1">
+                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                <span className="text-sm text-gray-600">Commandes</span>
+              </div>
+            </div>
+          </div>
+          <div className="h-64 flex items-center justify-center bg-gray-50 rounded-lg">
+            <div className="text-center">
+              <BarChart3 size={48} className="text-gray-300 mx-auto mb-2" />
+              <p className="text-gray-500">Graphique des revenus</p>
+              <p className="text-xs text-gray-400">Intégration en cours...</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Top Products */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Produits Populaires</h3>
+          <div className="space-y-4">
+            {[1, 2, 3, 4, 5].map((item) => (
+              <div key={item} className="flex items-center space-x-3">
+                <div className="w-8 h-8 bg-gray-200 rounded-lg"></div>
+                <div className="flex-1">
+                  <p className="text-sm font-medium text-gray-900">Produit {item}</p>
+                  <p className="text-xs text-gray-500">{50 - item * 8} ventes</p>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <Star className="text-yellow-400" size={12} />
+                  <span className="text-xs text-gray-600">4.{item}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="grid lg:grid-cols-2 gap-6">
+        {/* Recent Orders */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200">
             <div className="p-6 border-b border-gray-200">
               <div className="flex items-center justify-between">
                 <h3 className="text-lg font-semibold text-gray-900">Commandes Récentes</h3>
@@ -191,66 +288,99 @@ const AdminDashboard = () => {
             </div>
           </div>
 
-          {/* Low Stock Alert */}
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200">
-            <div className="p-6 border-b border-gray-200">
+        {/* Alerts and Notifications */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200">
+          <div className="p-6 border-b border-gray-200">
+            <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2">
                 <AlertCircle className="text-orange-500" size={20} />
-                <h3 className="text-lg font-semibold text-gray-900">Stock Faible</h3>
+                <h3 className="text-lg font-semibold text-gray-900">Alertes & Notifications</h3>
+              </div>
+              <span className="bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs font-semibold">
+                3 alertes
+              </span>
+            </div>
+          </div>
+          <div className="p-6">
+            <div className="space-y-4">
+              <div className="flex items-start space-x-3 p-3 bg-red-50 rounded-lg">
+                <AlertCircle className="text-red-500 mt-0.5" size={16} />
+                <div>
+                  <p className="font-medium text-red-900 text-sm">Stock critique</p>
+                  <p className="text-red-700 text-xs">2 produits en rupture de stock</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start space-x-3 p-3 bg-yellow-50 rounded-lg">
+                <Clock className="text-yellow-500 mt-0.5" size={16} />
+                <div>
+                  <p className="font-medium text-yellow-900 text-sm">Commandes en attente</p>
+                  <p className="text-yellow-700 text-xs">5 commandes nécessitent validation</p>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-3 p-3 bg-blue-50 rounded-lg">
+                <MessageSquare className="text-blue-500 mt-0.5" size={16} />
+                <div>
+                  <p className="font-medium text-blue-900 text-sm">Nouveaux messages</p>
+                  <p className="text-blue-700 text-xs">8 messages clients non lus</p>
+                </div>
               </div>
             </div>
-            <div className="p-6">
-              <div className="space-y-4">
-                {stats.lowStockProducts.map((product, index) => (
-                  <div key={index} className="flex items-center justify-between py-3 border-b border-gray-100 last:border-b-0">
-                    <div>
-                      <p className="font-medium text-gray-900">{product.name}</p>
-                      <p className="text-sm text-gray-600">{product.category}</p>
-                    </div>
-                    <div className="text-right">
-                      <span className="bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs font-semibold">
-                        {product.stock} restant{product.stock > 1 ? 's' : ''}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-4">
-                <Link to="/admin/products" className="text-primary-600 hover:text-primary-700 text-sm font-medium">
-                  Gérer les stocks →
-                </Link>
-              </div>
+            
+            <div className="mt-6 flex space-x-3">
+              <Link 
+                to="/admin/products" 
+                className="flex-1 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm text-center transition-colors"
+              >
+                Gérer Stock
+              </Link>
+              <Link 
+                to="/admin/orders" 
+                className="flex-1 bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg text-sm text-center transition-colors"
+              >
+                Voir Commandes
+              </Link>
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Quick Actions */}
-        <div className="mt-8">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Actions Rapides</h3>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <Link 
-              to="/admin/products" 
-              className="bg-primary-500 hover:bg-primary-600 text-white p-6 rounded-lg transition-colors text-center"
-            >
-              <Package size={32} className="mx-auto mb-2" />
-              <p className="font-medium">Gérer les Produits</p>
-            </Link>
-            <Link 
-              to="/admin/orders" 
-              className="bg-blue-500 hover:bg-blue-600 text-white p-6 rounded-lg transition-colors text-center"
-            >
-              <ShoppingBag size={32} className="mx-auto mb-2" />
-              <p className="font-medium">Voir les Commandes</p>
-            </Link>
-            <button className="bg-green-500 hover:bg-green-600 text-white p-6 rounded-lg transition-colors text-center">
-              <BarChart3 size={32} className="mx-auto mb-2" />
-              <p className="font-medium">Rapport des Ventes</p>
-            </button>
-            <button className="bg-purple-500 hover:bg-purple-600 text-white p-6 rounded-lg transition-colors text-center">
-              <Users size={32} className="mx-auto mb-2" />
-              <p className="font-medium">Gestion Clients</p>
-            </button>
-          </div>
+      {/* Quick Actions */}
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <h3 className="text-lg font-semibold text-gray-900 mb-6">Actions Rapides</h3>
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <Link 
+            to="/admin/products" 
+            className="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white p-6 rounded-xl transition-all duration-300 text-center transform hover:scale-105"
+          >
+            <Package size={32} className="mx-auto mb-3" />
+            <p className="font-medium">Gérer Produits</p>
+          </Link>
+          
+          <Link 
+            to="/admin/orders" 
+            className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white p-6 rounded-xl transition-all duration-300 text-center transform hover:scale-105"
+          >
+            <ShoppingBag size={32} className="mx-auto mb-3" />
+            <p className="font-medium">Commandes</p>
+          </Link>
+          
+          <Link 
+            to="/admin/analytics" 
+            className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white p-6 rounded-xl transition-all duration-300 text-center transform hover:scale-105"
+          >
+            <BarChart3 size={32} className="mx-auto mb-3" />
+            <p className="font-medium">Statistiques</p>
+          </Link>
+          
+          <Link 
+            to="/admin/users" 
+            className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white p-6 rounded-xl transition-all duration-300 text-center transform hover:scale-105"
+          >
+            <Users size={32} className="mx-auto mb-3" />
+            <p className="font-medium">Utilisateurs</p>
+          </Link>
         </div>
       </div>
     </div>

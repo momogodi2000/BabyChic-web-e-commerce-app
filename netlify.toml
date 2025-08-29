@@ -4,6 +4,8 @@
 
 [build.environment]
   NODE_VERSION = "18"
+  VITE_API_URL = "https://babychic-backend.onrender.com/api"
+  VITE_APP_ENV = "production"
 
 [[redirects]]
   from = "/*"
@@ -36,5 +38,6 @@
     Cache-Control = "no-cache"
 
 # Environment variables for production
-# Set these in Netlify dashboard:
-# VITE_API_URL = "https://your-backend-url.render.com/api"
+# These are set above in [build.environment]
+# Backend URL: https://babychic-backend.onrender.com/api
+# Frontend URL: https://babychic.netlify.app
